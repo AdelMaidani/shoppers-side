@@ -1,0 +1,6 @@
+.dropdownMenu {
+  visibility: hidden;
+}
+.dropdownContainer:hover + .dropdownMenu {
+  visibility: visible;
+}
