@@ -17,39 +17,36 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<iProducts["products"]>([]);
   const { customerData, userType, setUser } = useUser();
-  const { cart } = useCart();
 
   useEffect(() => {
-    if (cart.length > 0) {
-      const Ids = [] as any;
-
-      var one = new Promise<void>((resolve, reject) => {
-        cart.forEach((value, index, array) => {
-          Ids.push(value.id);
-          if (index === array.length - 1) {
-            resolve();
-            console.log("1111");
-          }
-        });
-      });
-
-      one.then(() => {
-        console.log("send");
-        axios({
-          method: "Post",
-          headers: { "Content-Type": "application/json" },
-          url: "http://localhost:5000/api/vendor/getProductByIds",
-          data: { Ids },
-        })
-          .then((res) => {
-            setCartItems(res.data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
-    }
-  }, [cart]);
+    // if (cart.length > 0) {
+    //   const Ids = [] as any;
+    //   var one = new Promise<void>((resolve, reject) => {
+    //     cart.forEach((value, index, array) => {
+    //       Ids.push(value.id);
+    //       if (index === array.length - 1) {
+    //         resolve();
+    //         console.log("1111");
+    //       }
+    //     });
+    //   });
+    //   one.then(() => {
+    //     console.log("send");
+    //     axios({
+    //       method: "Post",
+    //       headers: { "Content-Type": "application/json" },
+    //       url: "http://localhost:5000/api/vendor/getProductByIds",
+    //       data: { Ids },
+    //     })
+    //       .then((res) => {
+    //         setCartItems(res.data);
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   });
+    // }
+  }, []);
 
   const Logout = () => {
     axios({
@@ -68,18 +65,18 @@ const Navbar = () => {
 
   return (
     <div className="relative">
-      <div className="check bg-black flex h-24 justify-between text-white w-full pr-5 pl-5 text-xs items-center">
+      <div className="check bg-black flex justify-between pl-5 pr-5 h-16 overflow-hidden text-white text-xs items-center">
         <div className="hidden sm:flex items-center gap-2">
           <img className="h-5" src={IndiaFlag} alt="" />
           <span>India</span>
         </div>
-        <Link to={"/"}>
+        <Link to={"/"} className="w-20">
           <img src={logo} className="h-24 object-cover w-20" alt="logo" />
         </Link>
-        <div className="flex items-center gap-5">
+        <div className="flex items-center">
           {/* Cart */}
           <Menu as="div" className="flex relative z-20 flex-col">
-            <Menu.Button className="flex items-center gap-2 w-24 justify-center">
+            <Menu.Button className="flex items-center gap-2 justify-center">
               <img src={cartIcon} alt="Icon" className="h-5" />
             </Menu.Button>
             <Transition
@@ -198,25 +195,13 @@ const Navbar = () => {
           ) : (
             <Link
               to={"/login"}
-              className="flex items-center gap-2 w-24 justify-center"
+              className="flex items-center gap-2 justify-center"
             >
               <img src={userIcon} alt="Icon" className="h-5" />
             </Link>
           )}
         </div>
       </div>
-      {/* <div className="flex flex-col items-center absolute z-30 bg-black flex flex-col gap-2 p-5 text-white border border-white">
-        {cartItems.map((item) => (
-          <CartItem
-            productName={item.productName}
-            cover={item.coverPhoto}
-            price={item.price}
-          />
-        ))}
-        <div>
-          <button className="border border-white p-1">Check Out</button>
-        </div>
-      </div> */}
     </div>
   );
 };
