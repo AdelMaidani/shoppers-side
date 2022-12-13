@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { scrollToTop } from "../utils/ScrolToTop";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import {} from "../contexts/CartContext";
+import { useCart } from "../contexts/CartContext";
 
 type Iproduct = {
   product: {
@@ -25,6 +25,7 @@ type Iproduct = {
 };
 
 const ProductPage = () => {
+  const { cart, IncreaseCartQuantity, DecreaseCartQuantity } = useCart();
   const [product, setProduct] = useState<Iproduct["product"]>();
   const [sizeSelected, setSizeSelected] = useState<boolean>(true);
 
@@ -50,21 +51,36 @@ const ProductPage = () => {
     sizes.push(i.size);
   });
 
-  const addToBag = () => {};
+  // Add to bag
+  const addToBag = () => {
+    var e = document.getElementById("selectSize") as HTMLSelectElement;
+
+    if (e.value === "Select Size") {
+      setSizeSelected(false);
+    } else {
+      IncreaseCartQuantity(ProductId, e.value);
+      setSizeSelected(true);
+      e.value = "Select Size";
+    }
+  };
+
+  const removeItem = () => {
+    DecreaseCartQuantity(ProductId, "Large");
+  };
 
   return (
-    <div className="bg-black text-white p-10 grid justify-center grid-cols-2">
-      <div className="h-full w-96 flex flex-col gap-5 bg-black">
+    <div className="bg-black text-white p-10 flex">
+      <div className="h-full w-full flex flex-col gap-5 bg-black">
         {product?.images.map((image) => (
           <img
             src={image}
             key={image}
             alt=""
-            className="h-full w-full object-contain"
+            className="h-screen w-full object-contain"
           />
         ))}
       </div>
-      <div className="flex flex-col sticky top-10 self-start gap-10">
+      <div className="flex flex-col w-full sticky top-10 self-start gap-10">
         <span className="text-xl">{product?.productName}</span>
         <div className="flex gap-2">
           <span>Rs.</span>
@@ -73,7 +89,7 @@ const ProductPage = () => {
         <div className="flex gap-2 items-center">
           <select
             className="text-white bg-black border border-white p-1"
-            name=""
+            name="selectSize"
             id="selectSize"
           >
             <option>Select Size</option>
@@ -97,6 +113,7 @@ const ProductPage = () => {
               Add to bag
             </button>
           </div>
+          <button onClick={removeItem}>Remove</button>
           <button className="bg-black text-white border border-white p-1 w-32 text-center">
             Check Out
           </button>
