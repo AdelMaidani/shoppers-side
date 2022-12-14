@@ -68,8 +68,10 @@ const ProductPage = () => {
     DecreaseCartQuantity(ProductId, "Large");
   };
 
+  cart.find((item) => item.id === ProductId && item.size === "Medium");
+
   return (
-    <div className="bg-black text-white p-10 flex">
+    <div className="bg-black text-white text-xs p-10 flex">
       <div className="h-full w-full flex flex-col gap-5 bg-black">
         {product?.images.map((image) => (
           <img
@@ -104,8 +106,8 @@ const ProductPage = () => {
           </span>
         </div>
         <div>{product?.description}</div>
-        <div className="flex flex-col gap-4">
-          <div className="h-20">
+        <div className="flex flex-col gap-2">
+          <div className="">
             <button
               onClick={addToBag}
               className="bg-black text-white border border-white p-1 w-32 text-center"
@@ -113,7 +115,6 @@ const ProductPage = () => {
               Add to bag
             </button>
           </div>
-          <button onClick={removeItem}>Remove</button>
           <button className="bg-black text-white border border-white p-1 w-32 text-center">
             Check Out
           </button>

@@ -16,7 +16,10 @@ type Props = {
 
 const ProductCard = (product: Props) => {
   return (
-    <Link to={`/product/${product._id}`} className="flex flex-col gap-2">
+    <Link
+      to={`/product/${product._id}`}
+      className="flex flex-col gap-2 text-xs"
+    >
       <div className="h-40 sm:h-72 max-w-52 bg-white">
         <img src={product.coverPhoto} className="h-72 object-cover" alt="" />
       </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import DashNav from "../../components/VendorNav";
 
@@ -15,7 +14,7 @@ const Orders = () => {
           <span className="w-32">Status</span>
         </div>
         <Link to={"/dashboard/order/:id"} className="bg-gray-100">
-          <div className="flex hover:bg-gray-200 duration-500 justify-around gap-10 p-10 text-black">
+          <div className="flex text-xs hover:bg-gray-200 duration-500 justify-around gap-10 p-10 text-black">
             <span className="w-10">2</span>
             <span className="w-32">1/12/23</span>
             <span className="w-32">Mohammed Adel</span>
@@ -25,7 +24,7 @@ const Orders = () => {
           <hr />
         </Link>
         <Link to={"/dashboard/order/:id"} className="bg-gray-100">
-          <div className="flex hover:bg-gray-200 duration-500 justify-around gap-10 p-10 text-black">
+          <div className="flex text-xs hover:bg-gray-200 duration-500 justify-around gap-10 p-10 text-black">
             <span className="w-10">2</span>
             <span className="w-32">1/12/23</span>
             <span className="w-32">Mohammed Adel</span>
@@ -37,14 +36,14 @@ const Orders = () => {
       </div>
       <div className="flex flex-col gap-5 sm:hidden">
         <div className="border rounded-lg grid grid-cols-2 p-3 text-xs">
-          <div className="flex flex-col font-bold">
+          <div className="flex text-xs flex-col font-bold">
             <span className="w-10">ID:</span>
             <span className="w-32">Date:</span>
             <span className="w-32">Customer Name:</span>
             <span className="w-32">Product Name:</span>
             <span className="w-32">Status:</span>
           </div>
-          <div className="flex flex-col">
+          <div className="flex text-xs flex-col">
             <span className="w-10">2</span>
             <span className="w-32">1/12/23</span>
             <span className="w-32">Mohammed Adel</span>
@@ -53,14 +52,14 @@ const Orders = () => {
           </div>
         </div>
         <div className="border rounded-lg grid grid-cols-2 p-3 text-xs">
-          <div className="flex flex-col font-bold">
+          <div className="flex text-xs flex-col font-bold">
             <span className="w-10">ID:</span>
             <span className="w-32">Date:</span>
             <span className="w-32">Customer Name:</span>
             <span className="w-32">Product Name:</span>
             <span className="w-32">Status:</span>
           </div>
-          <div className="flex flex-col">
+          <div className="flex text-xs flex-col">
             <span className="w-10">2</span>
             <span className="w-32">1/12/23</span>
             <span className="w-32">Mohammed Adel</span>
@@ -69,14 +68,14 @@ const Orders = () => {
           </div>
         </div>
         <div className="border rounded-lg grid grid-cols-2 p-3 text-xs">
-          <div className="flex flex-col font-bold">
+          <div className="flex text-xs flex-col font-bold">
             <span className="w-10">ID:</span>
             <span className="w-32">Date:</span>
             <span className="w-32">Customer Name:</span>
             <span className="w-32">Product Name:</span>
             <span className="w-32">Status:</span>
           </div>
-          <div className="flex flex-col">
+          <div className="flex text-xs flex-col">
             <span className="w-10">2</span>
             <span className="w-32">1/12/23</span>
             <span className="w-32">Mohammed Adel</span>

@@ -6,7 +6,7 @@ const Accessories = () => {
   React.useEffect(() => scrollToTop(), []);
   return (
     <div className="flex flex-col items-center p-10 w-full gap-10 bg-black text-white">
-      <div className="text-xl underline underline-offset-8">Accessories</div>
+      <div className="text-lg underline underline-offset-8">Accessories</div>
       <div className="flex w-full flex-col gap-2 sm:flex-row justify-between">
         <div className="flex gap-1">
           <span>Sort by category:</span>
