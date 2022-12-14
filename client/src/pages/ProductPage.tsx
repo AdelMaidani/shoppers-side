@@ -68,7 +68,7 @@ const ProductPage = () => {
     DecreaseCartQuantity(ProductId, "Large");
   };
 
-  cart.find((item) => item.id === ProductId && item.size === "Medium");
+  // cart.find((item) => item.id === ProductId && item.size === "Medium");
 
   return (
     <div className="bg-black text-white text-xs p-10 flex">

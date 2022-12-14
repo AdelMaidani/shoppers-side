@@ -37,6 +37,8 @@ export function CartProvider({ children }: cartProviderProps) {
           return { ...item, q: item.q + 1 };
         });
       });
+    } else if (find.size != size) {
+      return setCart([...cart, { id, q: 1, size }]);
     }
   };
 
