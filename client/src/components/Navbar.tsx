@@ -67,15 +67,6 @@ const Navbar = () => {
       });
   };
 
-  function adel() {
-    console.log(
-      cart.filter((index) => {
-        return index.id === "6360ab575a45bf8a527612a6";
-      })
-    );
-  }
-  adel();
-
   return (
     <div className="relative">
       <div className="check bg-black flex justify-between pl-5 pr-5 w-full text-white text-xs items-center">
@@ -110,7 +101,7 @@ const Navbar = () => {
                       <CartItemDropDown
                         active={active}
                         cartItem={cartItem}
-                        cart={cart}
+                        cartItems={cartItems}
                       />
                     )}
                   </Menu.Item>

@@ -82,9 +82,30 @@ const Footer = () => {
           Socials
         </div>
         <div className="flex items-center justify-center">
-          <img src={TwitterIcon} alt="" />
-          <img src={FacebookIcon} alt="" />
-          <img src={InstagramIcon} alt="" />
+          <img
+            className="cursor-pointer"
+            src={TwitterIcon}
+            onClick={() => {
+              window.open("http://www.twitter.com", "_blank");
+            }}
+            alt="Twitter"
+          />
+          <img
+            src={FacebookIcon}
+            className="cursor-pointer"
+            onClick={() => {
+              window.open("http://www.Facebook.com", "_blank");
+            }}
+            alt="Facebook"
+          />
+          <img
+            src={InstagramIcon}
+            alt="Instagram"
+            className="cursor-pointer"
+            onClick={() => {
+              window.open("http://www.Instagram.com", "_blank");
+            }}
+          />
         </div>
       </div>
     </div>

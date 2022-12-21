@@ -1,13 +1,15 @@
-import React from "react";
-import { iProducts } from "../interfaces/ProductInterface";
+import { Product } from "../interfaces/ProductInterface";
+import { useCart } from "../contexts/CartContext";
 
 type Props = {
   active: boolean;
-  cartItem: any;
-  cart: any;
+  cartItem: Product;
+  cartItems: Array<Product>;
 };
 
-const CartItemDropDown = ({ active, cartItem, cart }: Props) => {
+const CartItemDropDown = ({ active, cartItem, cartItems }: Props) => {
+  const { DecreaseCartQuantity, cart } = useCart();
+
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
   }
@@ -42,7 +44,10 @@ const CartItemDropDown = ({ active, cartItem, cart }: Props) => {
                     <p>{size.q}</p>
                   </div>
                 </div>
-                <button className="border h-4 w-4 border-black bg-black text-white hover:text-black hover:bg-white duration-300">
+                <button
+                  onClick={() => DecreaseCartQuantity(size.id, size.size)}
+                  className="border h-4 w-4 border-black bg-black text-white hover:text-black hover:bg-white duration-300"
+                >
                   X
                 </button>
               </div>

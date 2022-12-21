@@ -12,14 +12,13 @@ type Iproduct = {
     date: Date;
     description: String;
     images: [];
-    price: Number;
+    price: number;
     productName: String;
-    size: [
-      {
-        q: string;
-        size: string;
-      }
-    ];
+    size: {
+      q: number;
+      size: string;
+    }[];
+
     subCategory: String;
   };
 };
@@ -28,6 +27,7 @@ const ProductPage = () => {
   const { cart, IncreaseCartQuantity, DecreaseCartQuantity } = useCart();
   const [product, setProduct] = useState<Iproduct["product"]>();
   const [sizeSelected, setSizeSelected] = useState<boolean>(true);
+  const [emptySize, setEmptySize] = useState(false);
 
   const id = useParams();
   const ProductId = id.productId as string;
@@ -54,21 +54,55 @@ const ProductPage = () => {
   // Add to bag
   const addToBag = () => {
     var e = document.getElementById("selectSize") as HTMLSelectElement;
+    const SizeQ = product?.size.find((item) => item.size === e.value)?.q as any;
+    const Cart = cart.find(
+      (item) => item.id === ProductId && item.size === e.value
+    );
 
     if (e.value === "Select Size") {
-      setSizeSelected(false);
+      setEmptySize(true);
     } else {
+      setEmptySize(false);
       IncreaseCartQuantity(ProductId, e.value);
       setSizeSelected(true);
-      e.value = "Select Size";
+      if (Cart) {
+        if (SizeQ - Cart?.q === 1) {
+          setProduct((currentProduct) => {
+            if (currentProduct) {
+              const updatedSizeList = currentProduct.size.filter((item) => {
+                console.log(e.value);
+                return item.size !== String(e.value);
+              });
+              return { ...currentProduct, size: updatedSizeList };
+            }
+          });
+        } else {
+          e.value = "Select Size";
+        }
+      } else {
+        e.value = "Select Size";
+      }
     }
   };
 
-  const removeItem = () => {
-    DecreaseCartQuantity(ProductId, "Large");
-  };
+  // Get size Quantity
+  const SizeQuantity = () => {
+    const e = document.getElementById("selectSize") as HTMLSelectElement;
+    const SizeQ = product?.size.find((item) => item.size === e.value)?.q as any;
+    const Cart = cart.find(
+      (item) => item.id === ProductId && item.size === e.value
+    );
 
-  // cart.find((item) => item.id === ProductId && item.size === "Medium");
+    if (Cart?.q) {
+      if (Cart.q > 0) {
+        return SizeQ - Cart.q;
+      } else if (Cart.q === 0) {
+        return 0;
+      }
+    } else {
+      return SizeQ;
+    }
+  };
 
   return (
     <div className="bg-black text-white text-xs p-10 flex">
@@ -88,20 +122,34 @@ const ProductPage = () => {
           <span>Rs.</span>
           <span>{product?.price.toString()}</span>
         </div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 flex-col gap-10">
           <select
             className="text-white bg-black border border-white p-1"
             name="selectSize"
             id="selectSize"
+            onChange={() => {
+              setEmptySize(false);
+              setSizeSelected(false);
+            }}
           >
-            <option>Select Size</option>
+            <option selected>Select Size</option>
             {sizes.map((size) => (
               <option value={size} key={size}>
                 {size}
               </option>
             ))}
           </select>
-          <span className={`text-red-400 ${sizeSelected ? "hidden" : "block"}`}>
+          <div
+            className={`flex gap-2 text-sm ${
+              sizeSelected ? "hidden" : "block"
+            }`}
+          >
+            <span className="text-xs">{`${
+              sizeSelected ? "" : SizeQuantity()
+            }`}</span>
+            <span className="text-xs">more left</span>
+          </div>
+          <span className={`text-red-400 ${emptySize ? "block" : "hidden"}`}>
             Please select size !
           </span>
         </div>
@@ -109,7 +157,7 @@ const ProductPage = () => {
         <div className="flex flex-col gap-2">
           <div className="">
             <button
-              onClick={addToBag}
+              onClick={() => addToBag()}
               className="bg-black text-white border border-white p-1 w-32 text-center"
             >
               Add to bag
