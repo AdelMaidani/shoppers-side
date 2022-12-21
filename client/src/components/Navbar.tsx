@@ -1,12 +1,9 @@
 import { useState, useEffect, Fragment } from "react";
 import logo from "../assets/DS.png";
-import { Link, useNavigate } from "react-router-dom";
-import userIcon from "../assets/Icons/user.png";
+import { Link } from "react-router-dom";
 import IndiaFlag from "../assets/Icons/india.png";
-import cartIcon from "../assets/Icons/cart.png";
-import myOrdersIcon from "../assets/Icons/myOrders.png";
 import "../utils/LogoutHover.css";
-import { useUser } from "../contexts/UserContext";
+// import { useUser } from "../contexts/UserContext";
 import { Menu, Transition } from "@headlessui/react";
 import axios from "axios";
 import { iProducts } from "../interfaces/ProductInterface";
@@ -14,9 +11,10 @@ import { useCart } from "../contexts/CartContext";
 import CartItemDropDown from "./CartItemDropDown";
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<iProducts["products"]>([]);
-  const { customerData, userType, setUser } = useUser();
+  const [emptyCart, setEmptyCart] = useState(true);
+  // const { setUser } = useUser();
   const { cart } = useCart();
 
   function classNames(...classes: any) {
@@ -49,23 +47,34 @@ const Navbar = () => {
             console.log(err);
           });
       });
+      setEmptyCart(false);
     }
   }, [cart]);
 
-  const Logout = () => {
-    axios({
-      method: "Get",
-      url: "http://localhost:5000/api/customer/logout",
-      withCredentials: true,
-    })
-      .then((res) => {
-        navigate("/");
-        setUser("Null");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const Logout = () => {
+  //   axios({
+  //     method: "Get",
+  //     url: "http://localhost:5000/api/customer/logout",
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       navigate("/");
+  //       setUser("Null");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  const total: number[] = [];
+
+  cart.map((item) => {
+    const one = cartItems.find((product) => item.id === product._id);
+
+    if (one) {
+      total.push(item.q * one.price);
+    }
+  });
 
   return (
     <div className="relative">
@@ -93,29 +102,31 @@ const Navbar = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="w-80 absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               {cartItems.map((cartItem) => (
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (
-                      <CartItemDropDown
-                        active={active}
-                        cartItem={cartItem}
-                        cartItems={cartItems}
-                      />
+                      <CartItemDropDown active={active} cartItem={cartItem} />
                     )}
                   </Menu.Item>
                 </div>
               ))}
-              <div>
+              <div className={`${emptyCart ? "hidden" : "block"}`}>
                 <Menu.Item>
-                  <div className="flex gap-3 bg-gray-100 text-gray-900 block px-4 py-2 text-xs">
-                    <div>Total:</div>
-                    <div>Rs. 2,300</div>
+                  <div className="flex justify-between font-extrabold gap-3 bg-gray-100 text-gray-900 block px-4 py-2 text-xs">
+                    <div>Grand Total:</div>
+                    <div>
+                      Rs. {total.reduce((partialSum, a) => partialSum + a, 0)}
+                    </div>
                   </div>
                 </Menu.Item>
               </div>
-              <div className="py-1">
+              <div
+                className={` p-2 flex justify-between  ${
+                  emptyCart ? "hidden" : "block"
+                }`}
+              >
                 <Menu.Item>
                   {({ active }) => (
                     <div
@@ -124,7 +135,33 @@ const Navbar = () => {
                         "block px-4 py-2 text-xs"
                       )}
                     >
-                      Check Out
+                      Edit cart
+                    </div>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      className={classNames(
+                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-xs"
+                      )}
+                    >
+                      Check out
+                    </div>
+                  )}
+                </Menu.Item>
+              </div>
+              <div className={` py-1 ${emptyCart ? "block" : "hidden"}`}>
+                <Menu.Item>
+                  {({ active }) => (
+                    <div
+                      className={classNames(
+                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-xs"
+                      )}
+                    >
+                      No items in cart .
                     </div>
                   )}
                 </Menu.Item>

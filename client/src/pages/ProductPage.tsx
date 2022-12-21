@@ -24,7 +24,7 @@ type Iproduct = {
 };
 
 const ProductPage = () => {
-  const { cart, IncreaseCartQuantity, DecreaseCartQuantity } = useCart();
+  const { cart, IncreaseCartQuantity } = useCart();
   const [product, setProduct] = useState<Iproduct["product"]>();
   const [sizeSelected, setSizeSelected] = useState<boolean>(true);
   const [emptySize, setEmptySize] = useState(false);
@@ -105,14 +105,14 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="bg-black text-white text-xs p-10 flex">
-      <div className="h-full w-full flex flex-col gap-5 bg-black">
+    <div className="bg-black text-white text-sm p-10 gap-10 flex flex-col md:flex-row ">
+      <div className=" w-3/4 flex md:flex-col gap-5 bg-black ">
         {product?.images.map((image) => (
           <img
             src={image}
             key={image}
             alt=""
-            className="h-screen w-full object-contain"
+            className="w-full h-1/2 object-contain"
           />
         ))}
       </div>

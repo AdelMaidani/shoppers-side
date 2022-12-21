@@ -80,15 +80,20 @@ const Home = () => {
         </div>
       </div>
       {/* WOMENS PRODUCTS SLIDER */}
-      {/* <span>Womens Best Sellers</span>
+      <span>Womens Best Sellers</span>
       <div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {mens.map((item) => (
+            <ProductCard
+              _id={item._id}
+              date={item.date}
+              coverPhoto={item.coverPhoto}
+              productName={item.productName}
+              price={item.price}
+            />
+          ))}
         </div>
-      </div> */}
+      </div>
       {/* Mens PRODUCTS SLIDER */}
       <span>Mens Best Sellers</span>
       <div>
@@ -105,15 +110,20 @@ const Home = () => {
         </div>
       </div>
       {/* Kids PRODUCTS SLIDER */}
-      {/* <span>Kids Best Sellers</span>
+      <span>Kids Best Sellers</span>
       <div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {mens.map((item) => (
+            <ProductCard
+              _id={item._id}
+              date={item.date}
+              coverPhoto={item.coverPhoto}
+              productName={item.productName}
+              price={item.price}
+            />
+          ))}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

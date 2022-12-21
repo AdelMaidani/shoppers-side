@@ -24,7 +24,6 @@ export function useCart() {
 
 export function CartProvider({ children }: cartProviderProps) {
   const [cart, setCart] = useState<cartProps[]>([]);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const IncreaseCartQuantity = (id: string, size: string) => {
     const find = cart.find((item) => item.id === id);
@@ -37,7 +36,7 @@ export function CartProvider({ children }: cartProviderProps) {
           return { ...item, q: item.q + 1 };
         });
       });
-    } else if (find.size != size) {
+    } else if (find.size !== size) {
       return setCart([...cart, { id, q: 1, size }]);
     }
   };

@@ -4,14 +4,24 @@ import { useCart } from "../contexts/CartContext";
 type Props = {
   active: boolean;
   cartItem: Product;
-  cartItems: Array<Product>;
 };
 
-const CartItemDropDown = ({ active, cartItem, cartItems }: Props) => {
-  const { DecreaseCartQuantity, cart } = useCart();
+const CartItemDropDown = ({ active, cartItem }: Props) => {
+  const { cart } = useCart();
 
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
+  }
+
+  const items: number[] = [];
+  const q = cart.find((item) => item.id === cartItem._id);
+
+  if (cart.find((item) => item.id === cartItem._id)) {
+    cart.forEach((item) => {
+      if (item.id === cartItem._id) {
+        items.push(item.q);
+      }
+    });
   }
 
   return (
@@ -22,15 +32,15 @@ const CartItemDropDown = ({ active, cartItem, cartItems }: Props) => {
       )}
     >
       <div className="flex gap-5 items-center">
-        <div className="bg-black w-18">
+        <div className="bg-black w-20 h-26">
           <img
             src={cartItem.coverPhoto}
-            alt="Product picture"
-            className="object-contain"
+            alt="Product"
+            className="w-20 h-26 object-"
           />
         </div>
         <div className="flex flex-col gap-2">
-          <p>{cartItem.productName}</p>
+          <p className="truncate font-bold">{cartItem.productName}</p>
           {cart
             .filter((index: any) => {
               return index.id === cartItem._id;
@@ -44,16 +54,15 @@ const CartItemDropDown = ({ active, cartItem, cartItems }: Props) => {
                     <p>{size.q}</p>
                   </div>
                 </div>
-                <button
-                  onClick={() => DecreaseCartQuantity(size.id, size.size)}
-                  className="border h-4 w-4 border-black bg-black text-white hover:text-black hover:bg-white duration-300"
-                >
-                  X
-                </button>
               </div>
             ))}
-
           <p>Rs. {cartItem.price}</p>
+
+          <div className="font-bold">
+            Total:{" "}
+            {cartItem.price *
+              items.reduce((partialSum, a) => partialSum + a, 0)}{" "}
+          </div>
         </div>
       </div>
     </div>
