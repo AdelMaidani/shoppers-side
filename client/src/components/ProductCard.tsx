@@ -16,15 +16,14 @@ type Props = {
 
 const ProductCard = (product: Props) => {
   return (
-    <Link
-      to={`/product/${product._id}`}
-      className="flex flex-col gap-2 text-xs"
-    >
-      <div className="h-40 sm:h-72 max-w-52 bg-white">
+    <Link to={`/product/${product._id}`} className="flex flex-col gap-2">
+      <div className="h-72">
         <img src={product.coverPhoto} className="h-72 object-cover" alt="" />
       </div>
-      <div className="flex flex-col">
-        <span>{product.productName}</span>
+      <div className="flex flex-col gap-2">
+        <span className="text-sm font-bold truncate">
+          {product.productName}
+        </span>
         <div className="flex gap-2">
           <span className="text-gray-300">Rs.</span>
           <span>{product.price.toString()}</span>

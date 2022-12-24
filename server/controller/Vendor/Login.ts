@@ -38,4 +38,8 @@ const VendorLogin = async (req: Request, res: Response) => {
     .sendStatus(200);
 };
 
-export { VendorLogin, CreateVendor };
+const VendorLogout = (req: Request, res: Response) => {
+  res.clearCookie("SS").sendStatus(200);
+};
+
+export { VendorLogin, CreateVendor, VendorLogout };

@@ -1,9 +1,10 @@
 import { useState, useEffect, Fragment } from "react";
 import logo from "../assets/DS.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import IndiaFlag from "../assets/Icons/india.png";
 import "../utils/LogoutHover.css";
-// import { useUser } from "../contexts/UserContext";
+import userIcon from "../assets/Icons/user.png";
+import { useUser } from "../contexts/UserContext";
 import { Menu, Transition } from "@headlessui/react";
 import axios from "axios";
 import { iProducts } from "../interfaces/ProductInterface";
@@ -11,10 +12,10 @@ import { useCart } from "../contexts/CartContext";
 import CartItemDropDown from "./CartItemDropDown";
 
 const Navbar = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<iProducts["products"]>([]);
   const [emptyCart, setEmptyCart] = useState(true);
-  // const { setUser } = useUser();
+  const { userType, setUser } = useUser();
   const { cart } = useCart();
 
   function classNames(...classes: any) {
@@ -51,20 +52,20 @@ const Navbar = () => {
     }
   }, [cart]);
 
-  // const Logout = () => {
-  //   axios({
-  //     method: "Get",
-  //     url: "http://localhost:5000/api/customer/logout",
-  //     withCredentials: true,
-  //   })
-  //     .then((res) => {
-  //       navigate("/");
-  //       setUser("Null");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const LogoutVendor = () => {
+    axios({
+      method: "Get",
+      url: "http://localhost:5000/api/vendor/logout",
+      withCredentials: true,
+    })
+      .then((res) => {
+        navigate("/");
+        setUser("Null");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const total: number[] = [];
 
@@ -79,96 +80,126 @@ const Navbar = () => {
   return (
     <div className="relative">
       <div className="check bg-black flex justify-between pl-5 pr-5 w-full text-white text-xs items-center">
-        <div className="hidden sm:flex items-center w-20 gap-2">
+        <div className="hidden sm:flex items-center w-20 gap-10">
           <img className="h-5" src={IndiaFlag} alt="" />
           <span>India</span>
         </div>
-        <Link to={"/"}>
-          <img src={logo} className="h-24 object-cover w-20" alt="logo" />
+        <Link to={"/"} className="flex items-center">
+          <img src={logo} className="h-24 object-cover" alt="logo" />
         </Link>
-        <Menu as="div" className="relative inline-block text-left">
-          <div>
-            <Menu.Button className="text-xs inline-flex w-full justify-center rounded-md border border-gray-300 bg-black px-4 py-2 text-xs font-medium text-white shadow-xs hover:bg-gray-50 hover:text-black focus:outline-none focus:ring-offset-gray-100">
-              Cart
-            </Menu.Button>
-          </div>
-
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
+        <div
+          className={`flex gap-10 items-center ${
+            userType === "Vendor" ? "block" : "hidden"
+          }`}
+        >
+          <Link to={"/dashboard/webpage"} className="flex item-center gap-3">
+            <img src={userIcon} className="h-4" alt="usericon" />
+            <span>Vendor</span>
+          </Link>
+          <button
+            onClick={() => LogoutVendor()}
+            className="border p-3 rounded-lg hover:text-black hover:bg-white duration-500"
           >
-            <Menu.Items className="w-80 absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              {cartItems.map((cartItem) => (
-                <div className="py-1">
+            Logout
+          </button>
+        </div>
+        <div
+          className={`flex items-center gap-10 ${
+            userType === "Vendor" ? "hidden" : "block"
+          }`}
+        >
+          <Link to={"/login"}>Login</Link>
+          <Menu as="div" className="relative inline-block text-left">
+            <div>
+              <Menu.Button className="text-xs inline-flex w-full justify-center rounded-md border border-gray-300 bg-black px-4 py-2 text-xs font-medium text-white shadow-xs hover:bg-gray-50 hover:text-black focus:outline-none focus:ring-offset-gray-100">
+                Cart
+              </Menu.Button>
+            </div>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="w-80 absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                {cartItems.map((cartItem) => (
+                  <div className="py-1">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <CartItemDropDown active={active} cartItem={cartItem} />
+                      )}
+                    </Menu.Item>
+                  </div>
+                ))}
+                <div className={`${emptyCart ? "hidden" : "block"}`}>
+                  <Menu.Item>
+                    <div className="flex justify-between font-extrabold gap-3 bg-gray-100 text-gray-900 block px-4 py-2 text-xs">
+                      <div>Grand Total:</div>
+                      <div>
+                        Rs. {total.reduce((partialSum, a) => partialSum + a, 0)}
+                      </div>
+                    </div>
+                  </Menu.Item>
+                </div>
+                <div
+                  className={` p-2 flex justify-between  ${
+                    emptyCart ? "hidden" : "block"
+                  }`}
+                >
                   <Menu.Item>
                     {({ active }) => (
-                      <CartItemDropDown active={active} cartItem={cartItem} />
+                      <div
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Edit cart
+                      </div>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to={"/checkout"}
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Check out
+                      </Link>
                     )}
                   </Menu.Item>
                 </div>
-              ))}
-              <div className={`${emptyCart ? "hidden" : "block"}`}>
-                <Menu.Item>
-                  <div className="flex justify-between font-extrabold gap-3 bg-gray-100 text-gray-900 block px-4 py-2 text-xs">
-                    <div>Grand Total:</div>
-                    <div>
-                      Rs. {total.reduce((partialSum, a) => partialSum + a, 0)}
-                    </div>
-                  </div>
-                </Menu.Item>
-              </div>
-              <div
-                className={` p-2 flex justify-between  ${
-                  emptyCart ? "hidden" : "block"
-                }`}
-              >
-                <Menu.Item>
-                  {({ active }) => (
-                    <div
-                      className={classNames(
-                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                        "block px-4 py-2 text-xs"
-                      )}
-                    >
-                      Edit cart
-                    </div>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <div
-                      className={classNames(
-                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                        "block px-4 py-2 text-xs"
-                      )}
-                    >
-                      Check out
-                    </div>
-                  )}
-                </Menu.Item>
-              </div>
-              <div className={` py-1 ${emptyCart ? "block" : "hidden"}`}>
-                <Menu.Item>
-                  {({ active }) => (
-                    <div
-                      className={classNames(
-                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                        "block px-4 py-2 text-xs"
-                      )}
-                    >
-                      No items in cart .
-                    </div>
-                  )}
-                </Menu.Item>
-              </div>
-            </Menu.Items>
-          </Transition>
-        </Menu>
+                <div className={` py-1 ${emptyCart ? "block" : "hidden"}`}>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        No items in cart .
+                      </div>
+                    )}
+                  </Menu.Item>
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        </div>
       </div>
     </div>
   );

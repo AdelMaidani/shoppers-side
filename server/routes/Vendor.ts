@@ -5,7 +5,11 @@ import {
   getProductById,
   getProductByIds,
 } from "../controller/Vendor/GetProducts";
-import { CreateVendor, VendorLogin } from "../controller/Vendor/Login";
+import {
+  CreateVendor,
+  VendorLogin,
+  VendorLogout,
+} from "../controller/Vendor/Login";
 import AuthVerify from "../middlewares/AuthVerify";
 
 const VendorRoute = Router();
@@ -16,5 +20,6 @@ VendorRoute.post("/createProduct", AuthVerify, CreateProduct);
 VendorRoute.get("/getProduct", getProduct);
 VendorRoute.post("/getProductById", AuthVerify, getProductById);
 VendorRoute.post("/getProductByIds", getProductByIds);
+VendorRoute.get("/logout", VendorLogout);
 
 export default VendorRoute;

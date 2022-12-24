@@ -28,6 +28,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState<Iproduct["product"]>();
   const [sizeSelected, setSizeSelected] = useState<boolean>(true);
   const [emptySize, setEmptySize] = useState(false);
+  const [changeInSize, setChangeInSize] = useState<boolean>();
 
   const id = useParams();
   const ProductId = id.productId as string;
@@ -93,6 +94,11 @@ const ProductPage = () => {
       (item) => item.id === ProductId && item.size === e.value
     );
 
+    if (Cart === undefined) {
+      // setSizeSelected(true);
+      // setEmptySize(true);
+    }
+
     if (Cart?.q) {
       if (Cart.q > 0) {
         return SizeQ - Cart.q;
@@ -129,6 +135,7 @@ const ProductPage = () => {
             id="selectSize"
             onChange={() => {
               setEmptySize(false);
+              setChangeInSize(!changeInSize);
               setSizeSelected(false);
             }}
           >
@@ -144,10 +151,9 @@ const ProductPage = () => {
               sizeSelected ? "hidden" : "block"
             }`}
           >
-            <span className="text-xs">{`${
-              sizeSelected ? "" : SizeQuantity()
-            }`}</span>
-            <span className="text-xs">more left</span>
+            <span className={`text-xs ${sizeSelected ? "hidden" : "block"}`}>
+              {`${changeInSize ? SizeQuantity() : SizeQuantity()}`} more left
+            </span>
           </div>
           <span className={`text-red-400 ${emptySize ? "block" : "hidden"}`}>
             Please select size !

@@ -26,6 +26,7 @@ import {
 } from "./contexts/PrivateRoutes";
 import VendorLogin from "./pages/VendorLogin";
 import { CartProvider } from "./contexts/CartContext";
+import Checkout from "./pages/Checkout";
 
 const Home = React.lazy(() => import("./pages/Home"));
 
@@ -58,6 +59,7 @@ function App() {
             <Route element={<Accesories />} path="/accessories" />
             <Route element={<ProductPage />} path="/product/:productId" />
             <Route element={<CategoryPage />} path="/Category/:categoryName" />
+            <Route element={<Checkout />} path="/checkout" />
             {/* Customer Dashboard */}
             <Route element={<ForCustomerOnly />}>
               <Route element={<MyOrders />} path="/dashboard/myOrders" />

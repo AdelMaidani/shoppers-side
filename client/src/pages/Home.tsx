@@ -25,7 +25,7 @@ const Home = () => {
   return (
     <div className="text-xs sm:text-sm bg-black h-full flex flex-col items-center p-10 text-white gap-10">
       {/* SHOP BY CATEGORY */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
         <div className="relative max-h-72 sm:max-h-96 max-w-80 bg-white">
           <img
             src={Men}
@@ -82,7 +82,7 @@ const Home = () => {
       {/* WOMENS PRODUCTS SLIDER */}
       <span>Womens Best Sellers</span>
       <div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-10">
           {mens.map((item) => (
             <ProductCard
               _id={item._id}
@@ -112,7 +112,7 @@ const Home = () => {
       {/* Kids PRODUCTS SLIDER */}
       <span>Kids Best Sellers</span>
       <div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-10">
           {mens.map((item) => (
             <ProductCard
               _id={item._id}

@@ -50,13 +50,13 @@ const VendorLogin = () => {
           }
         })
         .catch((err) => {
-          setLogging(false)
+          setLogging(false);
         });
     },
   });
 
   return (
-    <div className="bg-black text-white flex h-full flex-col items-center gap-10 p-10">
+    <div className="bg-black text-white flex h-screen justify-center flex-col items-center gap-10 p-10">
       <div className="text-xl underline underline-offset-8">Vendor Login</div>
       <div className="text-xs">Please enter e-mail and password:</div>
       <form
