@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useCart } from "../contexts/CartContext";
+import CheckoutItemQuantity from "./CheckoutItemQuantity";
 
 type product = {
   coverPhoto: string;
@@ -8,10 +10,11 @@ type product = {
   _id: string;
 };
 
-type sizes = {
+type Sizes = {
+  id: string;
   size: string;
   q: number;
-};
+}[];
 
 const CheckoutItem = ({
   coverPhoto,
@@ -20,45 +23,38 @@ const CheckoutItem = ({
   subCategory,
   _id,
 }: product) => {
-  const { cart } = useCart();
-  console.log(cart);
+  const { cart, IncreaseCartQuantity } = useCart();
 
-  const sizes: sizes[] = [];
+  const increaseQuantity = (id: string, size: string) => {};
 
-  cart.forEach((item) => {
-    if (item.id === _id) {
-      if (sizes.length > 0) {
-        console.log("Not empty");
-      } else {
-        sizes.push({ size: item.size, q: item.q });
-      }
-    }
-  });
+  const sizes: any[] = [];
 
   return (
     <div>
-      <div className="flex justify-between gap-5">
+      <div className="flex justify-between gap-5 border-b border-gray-500 pb-3">
         <div className="flex gap-5">
           {" "}
           {/* Product Picture */}
           <img
-            src="https://5.imimg.com/data5/VC/PG/MY-7814120/formal-t-shirt-500x500.jpg"
-            className="h-40"
+            src={coverPhoto}
+            className="h-40 w-1/2 object-cover"
             alt="product"
           />
           {/* Product info */}
           <div className="flex flex-col justify-between">
-            <span className="font-bold">{productName}</span>
-            <div className="flex gap-2">
-              <span>Product Id:</span>
-              <span>{_id}</span>
+            <div>
+              <span className="font-bold text-lg">{productName}</span>
+              <div className="flex w-40 justify-between">
+                <span>Product Id:</span>
+                <span>{_id.split("", 6)}</span>
+              </div>
             </div>
             <div>
-              <div className="flex gap-2">
+              <div className="flex w-40 justify-between">
                 <span>Category:</span>
                 <span>{category}</span>
               </div>
-              <div className="flex gap-2">
+              <div className="flex w-40 justify-between">
                 <span>Sub category:</span>
                 <span>{subCategory}</span>
               </div>
@@ -69,12 +65,15 @@ const CheckoutItem = ({
         <div className="flex flex-col justify-between">
           <div>
             {sizes.map((item) => (
-              <div>
-                {item.size} X {item.q}
-              </div>
+              <CheckoutItemQuantity
+                increaseQuantity={increaseQuantity}
+                size={item.size}
+                q={item.q}
+                _id={_id}
+              />
             ))}
           </div>
-          <div>total: Rs.23,000</div>
+          <div>Total: Rs.23,000</div>
         </div>
       </div>
     </div>

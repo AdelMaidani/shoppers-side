@@ -94,11 +94,6 @@ const ProductPage = () => {
       (item) => item.id === ProductId && item.size === e.value
     );
 
-    if (Cart === undefined) {
-      // setSizeSelected(true);
-      // setEmptySize(true);
-    }
-
     if (Cart?.q) {
       if (Cart.q > 0) {
         return SizeQ - Cart.q;

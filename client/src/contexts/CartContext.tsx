@@ -57,6 +57,8 @@ export function CartProvider({ children }: cartProviderProps) {
     }
   };
 
+  console.log(cart);
+
   return (
     <CartContext.Provider
       value={{ cart, IncreaseCartQuantity, DecreaseCartQuantity }}
