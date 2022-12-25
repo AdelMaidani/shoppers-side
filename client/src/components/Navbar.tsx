@@ -73,7 +73,7 @@ const Navbar = () => {
     const one = cartItems.find((product) => item.id === product._id);
 
     if (one) {
-      total.push(item.q * one.price);
+      item.sizes.map((size) => total.push(size.q * one.price));
     }
   });
 

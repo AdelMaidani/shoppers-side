@@ -13,16 +13,13 @@ const CartItemDropDown = ({ active, cartItem }: Props) => {
     return classes.filter(Boolean).join(" ");
   }
 
-  const items: number[] = [];
-  const q = cart.find((item) => item.id === cartItem._id);
+  const totalQuantity: number[] = [];
 
-  if (cart.find((item) => item.id === cartItem._id)) {
-    cart.forEach((item) => {
-      if (item.id === cartItem._id) {
-        items.push(item.q);
-      }
+  cart
+    .find((items) => items.id === cartItem._id)
+    ?.sizes.map((size) => {
+      totalQuantity.push(size.q);
     });
-  }
 
   return (
     <div
@@ -42,10 +39,8 @@ const CartItemDropDown = ({ active, cartItem }: Props) => {
         <div className="flex flex-col gap-2">
           <p className="truncate font-bold">{cartItem.productName}</p>
           {cart
-            .filter((index: any) => {
-              return index.id === cartItem._id;
-            })
-            .map((size: any) => (
+            .find((item) => item.id === cartItem._id)
+            ?.sizes.map((size) => (
               <div className="flex justify-between items-center gap-1">
                 <div className="flex gap-2">
                   <p>{size.size}</p>
@@ -56,12 +51,13 @@ const CartItemDropDown = ({ active, cartItem }: Props) => {
                 </div>
               </div>
             ))}
+
           <p>Rs. {cartItem.price}</p>
 
           <div className="font-bold">
             Total:{" "}
             {cartItem.price *
-              items.reduce((partialSum, a) => partialSum + a, 0)}{" "}
+              totalQuantity.reduce((partialSum, a) => partialSum + a, 0)}{" "}
           </div>
         </div>
       </div>

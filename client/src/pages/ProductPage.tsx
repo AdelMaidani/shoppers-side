@@ -52,13 +52,30 @@ const ProductPage = () => {
     sizes.push(i.size);
   });
 
-  // Add to bag
+  const SizeQuantity = () => {
+    const e = document.getElementById("selectSize") as HTMLSelectElement;
+    const SizeQ = product?.size.find((item) => item.size === e.value)?.q as any;
+    const Cart = cart
+      .find((item) => item.id === ProductId)
+      ?.sizes.find((size) => size.size === e.value);
+
+    if (Cart?.q) {
+      if (Cart.q > 0) {
+        return SizeQ - Cart.q;
+      } else if (Cart.q === 0) {
+        return 0;
+      }
+    } else {
+      return SizeQ;
+    }
+  };
+
   const addToBag = () => {
     var e = document.getElementById("selectSize") as HTMLSelectElement;
     const SizeQ = product?.size.find((item) => item.size === e.value)?.q as any;
-    const Cart = cart.find(
-      (item) => item.id === ProductId && item.size === e.value
-    );
+    const Cart = cart
+      .find((item) => item.id === ProductId)
+      ?.sizes.find((size) => size.size === e.value);
 
     if (e.value === "Select Size") {
       setEmptySize(true);
@@ -71,7 +88,6 @@ const ProductPage = () => {
           setProduct((currentProduct) => {
             if (currentProduct) {
               const updatedSizeList = currentProduct.size.filter((item) => {
-                console.log(e.value);
                 return item.size !== String(e.value);
               });
               return { ...currentProduct, size: updatedSizeList };
@@ -86,25 +102,6 @@ const ProductPage = () => {
     }
   };
 
-  // Get size Quantity
-  const SizeQuantity = () => {
-    const e = document.getElementById("selectSize") as HTMLSelectElement;
-    const SizeQ = product?.size.find((item) => item.size === e.value)?.q as any;
-    const Cart = cart.find(
-      (item) => item.id === ProductId && item.size === e.value
-    );
-
-    if (Cart?.q) {
-      if (Cart.q > 0) {
-        return SizeQ - Cart.q;
-      } else if (Cart.q === 0) {
-        return 0;
-      }
-    } else {
-      return SizeQ;
-    }
-  };
-
   return (
     <div className="bg-black text-white text-sm p-10 gap-10 flex flex-col md:flex-row ">
       <div className=" w-3/4 flex md:flex-col gap-5 bg-black ">
@@ -112,7 +109,7 @@ const ProductPage = () => {
           <img
             src={image}
             key={image}
-            alt=""
+            alt="Product"
             className="w-full h-1/2 object-contain"
           />
         ))}

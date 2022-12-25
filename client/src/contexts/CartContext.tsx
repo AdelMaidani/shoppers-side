@@ -12,8 +12,10 @@ type cartType = {
 
 type cartProps = {
   id: string;
-  q: number;
-  size: string;
+  sizes: {
+    size: string;
+    q: number;
+  }[];
 };
 
 const CartContext = createContext({} as cartType);
@@ -26,38 +28,46 @@ export function CartProvider({ children }: cartProviderProps) {
   const [cart, setCart] = useState<cartProps[]>([]);
 
   const IncreaseCartQuantity = (id: string, size: string) => {
-    const find = cart.find((item) => item.id === id);
-
-    if (find == null) {
-      return setCart([...cart, { id, q: 1, size }]);
-    } else if (find.size === size) {
-      setCart((currentItems) => {
-        return currentItems.map((item) => {
-          return { ...item, q: item.q + 1 };
-        });
-      });
-    } else if (find.size !== size) {
-      return setCart([...cart, { id, q: 1, size }]);
-    }
-  };
-
-  const DecreaseCartQuantity = (id: string, size: string) => {
-    const find = cart.find((item) => item.id === id);
-    if (find == null) {
+    if (cart.length === 0) {
+      setCart([...cart, { id: id, sizes: [{ size: size, q: 1 }] }]);
     } else {
-      setCart((currentItems) => {
-        if (currentItems.find((item) => item.id === id)?.q === 1) {
-          return currentItems.filter((item) => item.id !== id);
+      const IdExist = cart.find((item) => item.id === id);
+      if (IdExist === undefined) {
+        setCart([...cart, { id: id, sizes: [{ size: size, q: 1 }] }]);
+      } else {
+        const sizeExist = IdExist.sizes.find((item) => item.size === size);
+        if (sizeExist === undefined) {
+          setCart((currentItems) => {
+            return currentItems.map((item) => {
+              return { ...item, sizes: [...item.sizes, { size: size, q: 1 }] };
+            });
+          });
         } else {
-          return currentItems.map((item) => {
-            return { ...item, q: item.q - 1 };
+          setCart((currentItem) => {
+            return currentItem.map((item) => {
+              if (item.id === id) {
+                return {
+                  id: item.id,
+                  sizes: item.sizes.map((s) => {
+                    if (s.size === size) {
+                      return { size: size, q: s.q + 1 };
+                    } else {
+                      return s;
+                    }
+                  }),
+                };
+              } else {
+                return item;
+              }
+            });
           });
         }
-      });
+      }
     }
   };
-
   console.log(cart);
+
+  const DecreaseCartQuantity = (id: string, size: string) => {};
 
   return (
     <CartContext.Provider
