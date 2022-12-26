@@ -87,6 +87,7 @@ const Home = () => {
             <ProductCard
               _id={item._id}
               date={item.date}
+              key={item._id}
               coverPhoto={item.coverPhoto}
               productName={item.productName}
               price={item.price}
@@ -101,6 +102,7 @@ const Home = () => {
           {mens.map((item) => (
             <ProductCard
               _id={item._id}
+              key={item._id}
               date={item.date}
               coverPhoto={item.coverPhoto}
               productName={item.productName}
@@ -116,6 +118,7 @@ const Home = () => {
           {mens.map((item) => (
             <ProductCard
               _id={item._id}
+              key={item._id}
               date={item.date}
               coverPhoto={item.coverPhoto}
               productName={item.productName}

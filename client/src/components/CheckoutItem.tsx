@@ -2,19 +2,20 @@ import { useEffect, useState } from "react";
 import { useCart } from "../contexts/CartContext";
 import CheckoutItemQuantity from "./CheckoutItemQuantity";
 
+type sizes = {
+  size: string;
+  q: string;
+};
+
 type product = {
   coverPhoto: string;
   productName: string;
   category: string;
   subCategory: string;
   _id: string;
+  price: number;
+  sizes: Array<sizes>;
 };
-
-type Sizes = {
-  id: string;
-  size: string;
-  q: number;
-}[];
 
 const CheckoutItem = ({
   coverPhoto,
@@ -22,16 +23,24 @@ const CheckoutItem = ({
   category,
   subCategory,
   _id,
+  price,
+  sizes,
 }: product) => {
-  const { cart, IncreaseCartQuantity } = useCart();
+  const { cart } = useCart();
 
-  const increaseQuantity = (id: string, size: string) => {};
+  const item = cart.find((item) => item.id === _id);
 
-  const sizes: any[] = [];
+  const totalQuantity: number[] = [];
+
+  cart
+    .find((items) => items.id === _id)
+    ?.sizes.map((size) => {
+      totalQuantity.push(size.q);
+    });
 
   return (
     <div>
-      <div className="flex justify-between gap-5 border-b border-gray-500 pb-3">
+      <div className="flex justify-between border-b border-gray-500 pb-3">
         <div className="flex gap-5">
           {" "}
           {/* Product Picture */}
@@ -64,16 +73,23 @@ const CheckoutItem = ({
         {/* Product Price */}
         <div className="flex flex-col justify-between">
           <div>
-            {sizes.map((item) => (
+            {item?.sizes.map((item) => (
               <CheckoutItemQuantity
-                increaseQuantity={increaseQuantity}
                 size={item.size}
                 q={item.q}
                 _id={_id}
+                sizes={sizes}
               />
             ))}
           </div>
-          <div>Total: Rs.23,000</div>
+          <div className="flex justify-between">
+            <span className="">Total :</span>
+            <span className="">
+              Rs.
+              {price *
+                totalQuantity.reduce((partialSum, a) => partialSum + a, 0)}
+            </span>
+          </div>
         </div>
       </div>
     </div>

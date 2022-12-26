@@ -11,36 +11,47 @@ function Checkout() {
   const { cart } = useCart();
   const [cartItems, setCartItems] = useState<iProducts["products"]>([]);
 
-  // useEffect(() => {
-  //   if (cart.length > 0) {
-  //     const Ids = [] as any;
-  //     var one = new Promise<void>((resolve, reject) => {
-  //       cart.forEach((value, index, array) => {
-  //         Ids.push(value.id);
-  //         if (index === array.length - 1) {
-  //           resolve();
-  //         }
-  //       });
-  //     });
-  //     one.then(() => {
-  //       console.log("send");
-  //       axios({
-  //         method: "Post",
-  //         headers: { "Content-Type": "application/json" },
-  //         url: "http://localhost:5000/api/vendor/getProductByIds",
-  //         data: { Ids },
-  //       })
-  //         .then((res) => {
-  //           setCartItems(res.data);
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         });
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (cart.length > 0) {
+      const Ids = [] as any;
+      var one = new Promise<void>((resolve, reject) => {
+        cart.forEach((value, index, array) => {
+          Ids.push(value.id);
+          if (index === array.length - 1) {
+            resolve();
+          }
+        });
+      });
+      one.then(() => {
+        console.log("send");
+        axios({
+          method: "Post",
+          headers: { "Content-Type": "application/json" },
+          url: "http://localhost:5000/api/vendor/getProductByIds",
+          data: { Ids },
+        })
+          .then((res) => {
+            setCartItems(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    }
+  }, []);
+
+  const total: number[] = [];
+
+  cart.map((item) => {
+    const one = cartItems.find((product) => item.id === product._id);
+
+    if (one) {
+      item.sizes.map((size) => total.push(size.q * one.price));
+    }
+  });
+
   return (
-    <div className="bg-black h-screen flex gap-10 text-white p-10">
+    <div className="bg-black h-screen flex gap-10 text-white p-10 w-full">
       <div className="w-3/5 flex flex-col gap-10">
         <span className="text-xl font-bold">Cart</span>
         <div className="flex flex-col justify-between gap-5">
@@ -51,11 +62,14 @@ function Checkout() {
               category={item.category}
               subCategory={item.subCategory}
               _id={item._id}
+              sizes={item.size}
+              price={item.price}
             />
           ))}
         </div>
         <div className="text-lg font-bold text-right">
-          Grand Total : Rs. 42,000
+          <span> Grand total :</span>{" "}
+          <span>Rs.{total.reduce((partialSum, a) => partialSum + a, 0)}</span>
         </div>
       </div>
       <div className="border-l border-gray-500 pl-10 flex flex-col gap-10 items-center w-2/5">
@@ -91,16 +105,16 @@ function Checkout() {
             <div className="text-lg text-gray-300 font-semibold">
               Card information
             </div>
-            <div>
-              <input className="h-10 p-2 w-72 border" type="text" />
-              <input className="h-10 p-2 w-72 border" type="text" />
+            <div className="flex">
+              <input className="h-10 p-2 w-72 border text-black" type="text" />
+              <input className="h-10 p-2 w-20 border text-black" type="text" />
             </div>
           </div>
           <div className="flex flex-col gap-4">
             <div className="text-lg text-gray-300 font-semibold">
               Name on card
             </div>
-            <input className="h-10 p-2 w-full border" type="text" />
+            <input className="h-10 p-2 w-full border text-black" type="text" />
           </div>
           <div className="flex flex-col gap-4">
             <div className="text-lg text-gray-300 font-semibold">

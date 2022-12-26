@@ -66,7 +66,6 @@ export function CartProvider({ children }: cartProviderProps) {
     }
   };
   console.log(cart);
-
   const DecreaseCartQuantity = (id: string, size: string) => {};
 
   return (

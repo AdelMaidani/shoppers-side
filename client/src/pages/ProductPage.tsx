@@ -58,7 +58,6 @@ const ProductPage = () => {
     const Cart = cart
       .find((item) => item.id === ProductId)
       ?.sizes.find((size) => size.size === e.value);
-
     if (Cart?.q) {
       if (Cart.q > 0) {
         return SizeQ - Cart.q;
@@ -76,7 +75,6 @@ const ProductPage = () => {
     const Cart = cart
       .find((item) => item.id === ProductId)
       ?.sizes.find((size) => size.size === e.value);
-
     if (e.value === "Select Size") {
       setEmptySize(true);
     } else {
