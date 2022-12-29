@@ -16,10 +16,12 @@ app.use(cookieParser());
 import CustomerRoute from "../routes/Customer";
 import VendorRoute from "../routes/Vendor";
 import S3Route from "../routes/S3";
+import OrderRouter from "../routes/Orders";
 
 app.use("/api/customer", CustomerRoute);
 app.use("/api/vendor", VendorRoute);
 app.use("/api/aws", S3Route);
+app.use("/api/orders", OrderRouter);
 
 const start = async () => {
   try {

@@ -121,12 +121,6 @@ const VendorLogin = () => {
           Log In
         </button>
       </form>
-      <div>
-        New customer?{" "}
-        <Link to={"/signup"} className="underline">
-          Create an account
-        </Link>
-      </div>
     </div>
   );
 };

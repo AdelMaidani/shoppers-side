@@ -39,13 +39,21 @@ export function CartProvider({ children }: cartProviderProps) {
         if (sizeExist === undefined) {
           setCart((currentItems) => {
             return currentItems.map((item) => {
-              return { ...item, sizes: [...item.sizes, { size: size, q: 1 }] };
+              if (IdExist.id === item.id) {
+                return {
+                  ...item,
+                  sizes: [...item.sizes, { size: size, q: 1 }],
+                };
+              } else {
+                return item;
+              }
             });
           });
         } else {
           setCart((currentItem) => {
             return currentItem.map((item) => {
               if (item.id === id) {
+                console.log("size quantity increased");
                 return {
                   id: item.id,
                   sizes: item.sizes.map((s) => {
@@ -65,7 +73,7 @@ export function CartProvider({ children }: cartProviderProps) {
       }
     }
   };
-  console.log(cart);
+
   const DecreaseCartQuantity = (id: string, size: string) => {};
 
   return (

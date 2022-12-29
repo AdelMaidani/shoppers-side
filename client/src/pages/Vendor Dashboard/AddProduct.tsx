@@ -18,7 +18,8 @@ const AddProduct = () => {
     ) as HTMLInputElement;
     const size = sizeName.value;
     const q = sizeQuantity.value;
-    const ar = { size, q };
+    const sold: Number = 0;
+    const ar = { size, q, sold };
     sizes.push(ar);
     setSize(sizeCount + 1);
     sizeName.value = "";
@@ -67,11 +68,9 @@ const AddProduct = () => {
       const productImages = document.getElementById(
         "file_input"
       ) as HTMLInputElement | null;
-
       async function uploadCover() {
         const url = await axios.get("http://localhost:5000/api/aws/getUrl");
         formik.values.coverPhoto = url.data.url.split("?")[0];
-
         const file = document.getElementById(
           "file_input_cover"
         ) as HTMLInputElement | null;

@@ -42,17 +42,39 @@ function Checkout() {
 
   const total: number[] = [];
 
-  cart.map((item) => {
-    const one = cartItems.find((product) => item.id === product._id);
+  // cart.map((item) => {
+  //   const one = cartItems.find((product) => item.id === product._id);
 
-    if (one) {
-      item.sizes.map((size) => total.push(size.q * one.price));
-    }
-  });
+  //   if (one) {
+  //     item.sizes.map((size) => total.push(size.q * one.price));
+  //   }
+  // });
+
+  const PlaceOrder = () => {
+    const data = {
+      product: cart,
+      userId: "635507093b95913674093318",
+      address: "New york , USA",
+      status: "Order Received",
+      totalValue: 40000,
+    };
+
+    console.log(data);
+    // axios({
+    //   method: "Post",
+    //   url: "http://localhost:5000/api/orders/placeOrder",
+    //   data: data,
+    //   headers: { "Content-Type": "application/json" },
+    // })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => console.log(err));
+  };
 
   return (
-    <div className="bg-black h-screen flex gap-10 text-white p-10 w-full">
-      <div className="w-3/5 flex flex-col gap-10">
+    <div className="bg-black h-full flex flex-col lg:flex-row gap-10 text-white p-10 w-full">
+      <div className="lg:w-3/5 flex flex-col gap-10">
         <span className="text-xl font-bold">Cart</span>
         <div className="flex flex-col justify-between gap-5">
           {cartItems.map((item) => (
@@ -72,7 +94,7 @@ function Checkout() {
           <span>Rs.{total.reduce((partialSum, a) => partialSum + a, 0)}</span>
         </div>
       </div>
-      <div className="border-l border-gray-500 pl-10 flex flex-col gap-10 items-center w-2/5">
+      <div className="lg:border-l border-gray-500 pl-10 flex flex-col gap-10 items-center lg:w-2/5">
         <span className="text-xl font-bold">Payment</span>
         <div className="flex gap-10 items-center">
           <div className="w-20 bg-gray-200 hover:bg-gray-100 h-10 rounded-lg duration-300 flex items-center">
@@ -127,7 +149,10 @@ function Checkout() {
             </select>
           </div>
           <div>
-            <button className="border p-2 w-full h-10 hover:bg-white hover:text-black duration-500">
+            <button
+              onClick={() => PlaceOrder()}
+              className="border p-2 w-full h-10 hover:bg-white hover:text-black duration-500"
+            >
               Purchase
             </button>
           </div>

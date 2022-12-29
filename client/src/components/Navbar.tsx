@@ -15,7 +15,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<iProducts["products"]>([]);
   const [emptyCart, setEmptyCart] = useState(true);
-  const { userType, setUser } = useUser();
+  const { userType, setUser, customerData } = useUser();
   const { cart } = useCart();
 
   function classNames(...classes: any) {
@@ -67,6 +67,21 @@ const Navbar = () => {
       });
   };
 
+  const LogoutCustomer = () => {
+    axios({
+      method: "Get",
+      url: "http://localhost:5000/api/customer/logout",
+      withCredentials: true,
+    })
+      .then((res) => {
+        navigate("/");
+        setUser("Null");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const total: number[] = [];
 
   cart.map((item) => {
@@ -87,15 +102,107 @@ const Navbar = () => {
         <Link to={"/"} className="flex items-center">
           <img src={logo} className="h-24 object-cover" alt="logo" />
         </Link>
+        {/* Vendor  */}
         <div
           className={`flex gap-10 items-center ${
             userType === "Vendor" ? "block" : "hidden"
           }`}
         >
-          <Link to={"/dashboard/webpage"} className="flex item-center gap-3">
-            <img src={userIcon} className="h-4" alt="usericon" />
-            <span>Vendor</span>
-          </Link>
+          <Menu as="div">
+            <div>
+              <Menu.Button className="w-32 flex items-center gap-4 justify-center">
+                <img src={userIcon} className="h-4" alt="usericon" />
+                Shoppers Side
+              </Menu.Button>
+            </div>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="w-32 absolute z-10 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div>
+                  <Menu.Item>{({ active }) => <div>Profile</div>}</Menu.Item>
+                </div>
+
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to={"/dashboard/webpage"}
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Webpage
+                      </Link>
+                    )}
+                  </Menu.Item>
+                </div>
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to={"/dashboard/products"}
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Products
+                      </Link>
+                    )}
+                  </Menu.Item>
+                </div>
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to={"/dashboard/orders"}
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Orders
+                      </Link>
+                    )}
+                  </Menu.Item>
+                </div>
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <Link
+                        to={"/dashboard/addproduct"}
+                        onClick={() => LogoutCustomer()}
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Add products
+                      </Link>
+                    )}
+                  </Menu.Item>
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+
           <button
             onClick={() => LogoutVendor()}
             className="border p-3 rounded-lg hover:text-black hover:bg-white duration-500"
@@ -108,7 +215,108 @@ const Navbar = () => {
             userType === "Vendor" ? "hidden" : "block"
           }`}
         >
-          <Link to={"/login"}>Login</Link>
+          <Link
+            className={` ${userType === "Customer" ? "hidden" : "block"}`}
+            to={"/login"}
+          >
+            Login
+          </Link>
+
+          {/* User Menu */}
+          <Menu
+            as="div"
+            className={`${userType === "Customer" ? "block" : "hidden"}`}
+          >
+            <div>
+              <Menu.Button className="w-32 flex items-center gap-4 justify-center">
+                <img src={userIcon} className="h-4" alt="usericon" />
+                {customerData?.firstName}
+              </Menu.Button>
+            </div>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="w-32 absolute z-10 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div>
+                  <Menu.Item>{({ active }) => <div>Profile</div>}</Menu.Item>
+                </div>
+
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Profile
+                      </div>
+                    )}
+                  </Menu.Item>
+                </div>
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Orders
+                      </div>
+                    )}
+                  </Menu.Item>
+                </div>
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Customer Support
+                      </div>
+                    )}
+                  </Menu.Item>
+                </div>
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        onClick={() => LogoutCustomer()}
+                        className={classNames(
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
+                          "block px-4 py-2 text-xs"
+                        )}
+                      >
+                        Logout
+                      </div>
+                    )}
+                  </Menu.Item>
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+          {/* Cart */}
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button className="text-xs inline-flex w-full justify-center rounded-md border border-gray-300 bg-black px-4 py-2 text-xs font-medium text-white shadow-xs hover:bg-gray-50 hover:text-black focus:outline-none focus:ring-offset-gray-100">

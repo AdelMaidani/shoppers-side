@@ -40,13 +40,13 @@ const CheckoutItem = ({
 
   return (
     <div>
-      <div className="flex justify-between border-b border-gray-500 pb-3">
-        <div className="flex gap-5">
+      <div className="flex flex-col gap-10 lg:flex-row justify-between border-b border-gray-500 pb-3">
+        <div className="flex gap-5 justify-between">
           {" "}
           {/* Product Picture */}
           <img
             src={coverPhoto}
-            className="h-40 w-1/2 object-cover"
+            className="h-40 lg:w-1/2 object-cover"
             alt="product"
           />
           {/* Product info */}
@@ -82,8 +82,8 @@ const CheckoutItem = ({
               />
             ))}
           </div>
-          <div className="flex justify-between">
-            <span className="">Total :</span>
+          <div className="flex gap-3 lg:justify-between">
+            <span className="font-bold">Total :</span>
             <span className="">
               Rs.
               {price *
