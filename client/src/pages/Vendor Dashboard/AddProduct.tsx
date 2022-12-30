@@ -36,7 +36,6 @@ const AddProduct = () => {
       1
     );
     setSize(sizeCount + 1);
-    console.log(sizes);
   }
 
   const formik = useFormik({

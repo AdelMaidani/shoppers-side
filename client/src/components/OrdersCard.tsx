@@ -43,14 +43,32 @@ const OrdersCard = (order: Props) => {
 
   return (
     <Link to={`/dashboard/order/}`} className="bg-gray-100">
-      <div className="flex text-xs hover:bg-gray-200 duration-500 justify-around gap-10 p-10 text-black">
+      <div className="hidden sm:flex text-xs hover:bg-gray-200 duration-500 justify-around gap-10 p-10 text-black">
         <span className="w-10">{order.order._id.split("", 6)}</span>
         <span className="w-20">{order.order.date.split("T")[0]}</span>
         <span className="w-32">{customer?.firstName}</span>
         <span className="w-32">{order.order.totalValue}</span>
-        <span className="w-32">{order.order.status}</span>
+        <span className="text-green-600 w-32">{order.order.status}</span>
       </div>
       <hr />
+      <div className="flex flex-col gap-5 sm:hidden">
+        <div className="border rounded-lg grid grid-cols-2 p-3 text-xs">
+          <div className="flex text-xs flex-col font-bold">
+            <span className="w-10">Order ID:</span>
+            <span className="w-32">Date:</span>
+            <span className="w-32">Customer Name:</span>
+            <span className="w-32">Product Name:</span>
+            <span className="w-32">Status:</span>
+          </div>
+          <div className="flex text-xs flex-col">
+            <span className="w-10">{order.order._id.split("", 6)}</span>
+            <span className="w-32">{order.order.date.split("T")[0]}</span>
+            <span className="w-32">{customer?.firstName}</span>
+            <span className="w-32">{order.order.totalValue}</span>
+            <span className="text-green-600 w-32">{order.order.status}</span>
+          </div>
+        </div>
+      </div>
     </Link>
   );
 };

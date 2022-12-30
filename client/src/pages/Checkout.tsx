@@ -59,17 +59,16 @@ function Checkout() {
       totalValue: 40000,
     };
 
-    console.log(data);
-    // axios({
-    //   method: "Post",
-    //   url: "http://localhost:5000/api/orders/placeOrder",
-    //   data: data,
-    //   headers: { "Content-Type": "application/json" },
-    // })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => console.log(err));
+    axios({
+      method: "Post",
+      url: "http://localhost:5000/api/orders/placeOrder",
+      data: data,
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
