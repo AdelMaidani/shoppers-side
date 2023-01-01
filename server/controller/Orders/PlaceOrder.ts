@@ -3,13 +3,36 @@ import Order from "../../models/Orders";
 import Product from "../../models/Product";
 
 const PlaceOrder = async (req: Request, res: Response) => {
-  const { product, userId, address, totalValue, status } = req.body;
+  const {
+    product,
+    userId,
+    totalValue,
+    status,
+    country,
+    city,
+    street1,
+    street2,
+    pincode,
+    shippingMethod,
+    cardNumber,
+    nameOnCard,
+    countryOnCard,
+  } = req.body;
+
   const order = new Order({
     product,
     userId,
-    address,
     totalValue,
     status,
+    country,
+    city,
+    street1,
+    street2,
+    pincode,
+    shippingMethod,
+    cardNumber,
+    nameOnCard,
+    countryOnCard,
   });
 
   await order.save();

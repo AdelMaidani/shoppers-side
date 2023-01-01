@@ -32,8 +32,6 @@ const EditProduct = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(product);
-
   return (
     <div className="p-10 flex flex-col gap-10 justify-around">
       <div className="flex gap-2 items-center">

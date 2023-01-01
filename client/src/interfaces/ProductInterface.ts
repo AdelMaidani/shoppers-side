@@ -1,4 +1,5 @@
 export interface iProducts {
+  size: any;
   products: {
     _id: string;
     productName: string;
@@ -11,6 +12,7 @@ export interface iProducts {
       {
         size: string;
         q: string;
+        sold: number;
       }
     ];
     coverPhoto: string;

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 type Props = {
@@ -5,26 +6,37 @@ type Props = {
   date: Date;
   coverPhoto: string;
   productName: String;
-  size?: [
-    {
-      q: string;
-      size: string;
-    }
-  ];
+  size: {
+    q: string;
+    size: string;
+    sold: number;
+  }[];
 };
 
 const MyProductCard = (product: Props) => {
-  const total = [] as any;
-  product.size?.forEach((i) => {
-    total.push(parseInt(i.q));
-  });
+  const [sold, setSold] = useState<number>(0);
+  const [totalQuantityLeft, setTotalQuantityLeft] = useState<number>();
 
-  const totalQuantityLeft = total.reduce((a: any, i: any) => {
-    return a + i;
-  });
+  useEffect(() => {
+    // Sold
+    const totalSold = [] as any;
+    product.size?.forEach((i) => {
+      totalSold.push(i.sold);
+    });
+    setSold(totalSold.reduce((partialSum: any, a: any) => partialSum + a, 0));
+
+    // Left Quantity
+    const itemLeft = [] as any;
+    product.size?.forEach((i) => {
+      itemLeft.push(i.q);
+    });
+    setTotalQuantityLeft(
+      itemLeft.reduce((partialSum: any, a: any) => partialSum + a, 0)
+    );
+  }, [product]);
 
   return (
-    <div className="w-full">
+    <div className="w-full sm:text-center">
       <Link
         to={`/dashboard/product/${product._id}`}
         className="hidden sm:flex bg-gray-100 h-28"
@@ -41,7 +53,7 @@ const MyProductCard = (product: Props) => {
           </span>
           <span className="w-32">{product.productName}</span>
           <span className="w-32">{totalQuantityLeft}</span>
-          <span className="w-20">0</span>
+          <span className="w-20">{sold}</span>
         </div>
         <hr />
       </Link>
@@ -61,7 +73,7 @@ const MyProductCard = (product: Props) => {
             {totalQuantityLeft}
           </span>
           <span className="w-32 flex gap-2">
-            <p className="font-bold">Sold:</p> {0}
+            <p className="font-bold">Sold:</p> {sold}
           </span>
           <span className="w-32">{product.date.toString().split("T")[0]}</span>
         </div>

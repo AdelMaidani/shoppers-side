@@ -1,12 +1,16 @@
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../contexts/UserContext";
 import { scrollToTop } from "../utils/ScrolToTop";
-import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { useUser } from "../contexts/UserContext";
 
-const Login = () => {
+type Props = {
+  switchLogin: Function;
+};
+
+function Login({ switchLogin }: Props) {
   const { setUser } = useUser();
   useEffect(() => scrollToTop(), []);
   const [logging, setLogging] = useState<boolean>(false);
@@ -45,18 +49,16 @@ const Login = () => {
             setIncorrectCredentials(true);
             setLogging(false);
           } else {
-            navigate("/dashboard/myorders");
             setUser("Customer");
           }
         })
         .catch((err) => console.log(err));
     },
   });
-
   return (
-    <div className="bg-black text-white flex min-h-screen max-full-screen justify-center flex-col items-center gap-10 p-10">
+    <div className="bg-black text-white flex justify-center flex-col items-center gap-10 p-10">
       <div className="text-xl underline underline-offset-8">Login</div>
-      <div className="text-xs">Please enter your e-mail and password:</div>
+      <div className="text-xs">Please login to continue:</div>
       <form
         onSubmit={formik.handleSubmit}
         className="flex flex-col text-black items-center gap-5"
@@ -98,10 +100,10 @@ const Login = () => {
         >
           <div
             className="inline-block w-4 h-4
-          border-t-4 
-          border-white  
-          rounded-full 
-          animate-spin"
+      border-t-4 
+      border-white  
+      rounded-full 
+      animate-spin"
           ></div>
         </div>
         <div className={`${incorrectCredentials ? "block h-1" : "hidden h-1"}`}>
@@ -119,14 +121,17 @@ const Login = () => {
           Log In
         </button>
       </form>
-      <div>
+      <div className="flex gap-1">
         New customer?{" "}
-        <Link to={"/signup"} className="underline">
+        <div
+          onClick={() => switchLogin("signUp")}
+          className="underline cursor-pointer"
+        >
           Create an account
-        </Link>
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default Login;

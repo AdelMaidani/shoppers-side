@@ -42,7 +42,7 @@ const OrdersCard = (order: Props) => {
   }, []);
 
   return (
-    <Link to={`/dashboard/order/}`} className="bg-gray-100">
+    <Link to={`/dashboard/order/${order.order._id}`} className="bg-gray-100">
       <div className="hidden sm:flex text-xs hover:bg-gray-200 duration-500 justify-around gap-10 p-10 text-black">
         <span className="w-10">{order.order._id.split("", 6)}</span>
         <span className="w-20">{order.order.date.split("T")[0]}</span>
