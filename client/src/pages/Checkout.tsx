@@ -16,7 +16,7 @@ function Checkout() {
   const { cart } = useCart();
   const { userType, customerData } = useUser();
   const [cartItems, setCartItems] = useState<iProducts["products"]>([]);
-  const [itemTotals, setItemTotals] = useState<number>();
+  const [itemTotals, setItemTotals] = useState<number>(0);
   const [switchLogin, setSwitchLogin] = useState("login");
   const [placing, setPlacing] = useState<boolean>(false);
 
@@ -70,7 +70,7 @@ function Checkout() {
     initialValues: {
       product: cart,
       userId: customerData?._id,
-      totalValue: "",
+      totalValue: 0,
       status: "Take Action",
       country: "",
       city: "",
@@ -111,6 +111,7 @@ function Checkout() {
     onSubmit: (values) => {
       setPlacing(true);
       values.userId = customerData?._id;
+      values.totalValue = itemTotals;
       console.log(values);
       axios({
         method: "Post",

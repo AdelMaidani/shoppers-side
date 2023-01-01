@@ -18,6 +18,7 @@ const PlaceOrder = async (req: Request, res: Response) => {
     nameOnCard,
     countryOnCard,
   } = req.body;
+  const trackingNumber = "";
 
   const order = new Order({
     product,
@@ -33,6 +34,7 @@ const PlaceOrder = async (req: Request, res: Response) => {
     cardNumber,
     nameOnCard,
     countryOnCard,
+    trackingNumber,
   });
 
   await order.save();

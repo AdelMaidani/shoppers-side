@@ -20,6 +20,7 @@ const OrderSchema = new mongoose.Schema({
   cardNumber: { type: Number, required: true },
   nameOnCard: { type: String, required: true },
   countryOnCard: { type: String, required: true },
+  trackingNumber: { type: String },
 });
 
 export default mongoose.model("Orders", OrderSchema);

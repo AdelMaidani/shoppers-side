@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
-import ProductCard from "../../components/ProductCard";
 import VendorOrderCard from "../../components/VendorOrderCard";
 
 type order = {
@@ -12,6 +11,13 @@ type order = {
   totalValue: number;
   userId: string;
   _id: string;
+  country: string;
+  city: string;
+  street1: string;
+  street2: string;
+  pincode: string;
+  shippingMethod: string;
+  trackingNumber: string;
 };
 
 type customer = {
@@ -26,6 +32,8 @@ const OrderDescription = () => {
   const [orderInfo, setOrderInfo] = useState<order>();
   const [customer, setCustomer] = useState<customer>();
   const [view, setView] = useState("Order");
+  const [orderStatus, setOrderStatus] = useState("");
+  const [trackingNumber, setTrackingNumber] = useState("");
 
   useEffect(() => {
     axios({
@@ -35,9 +43,13 @@ const OrderDescription = () => {
       url: "http://localhost:5000/api/orders/getCustomOrder",
       data: { id: id.id },
     })
-      .then((res) => setOrderInfo(res.data[0]))
+      .then((res) => {
+        setOrderInfo(res.data[0]);
+        setTrackingNumber(res.data[0].trackingNumber);
+        setOrderStatus(res.data[0].status);
+      })
       .catch((err) => console.log(err));
-  }, [id]);
+  }, [id, orderStatus]);
 
   useEffect(() => {
     axios({
@@ -50,6 +62,41 @@ const OrderDescription = () => {
       .then((res) => setCustomer(res.data[0]))
       .catch((err) => console.log(err));
   }, [orderInfo]);
+
+  const changeStatus = (status: string) => {
+    axios({
+      method: "Post",
+      withCredentials: true,
+      headers: { "Content-Type": "application/json" },
+      url: "http://localhost:5000/api/orders/changeOrderStatus",
+      data: { id: orderInfo?._id, status: status },
+    })
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+
+  const changeTrackingNumber = () => {
+    setTrackingNumber("");
+  };
+
+  const newTrackingNumber = () => {
+    const number = document.getElementById(
+      "newTrackingNumber"
+    ) as HTMLInputElement;
+
+    axios({
+      method: "Post",
+      withCredentials: true,
+      headers: { "Content-Type": "application/json" },
+      url: "http://localhost:5000/api/orders/changeTrackingNumber",
+      data: { id: orderInfo?._id, trackingNumber: number.value },
+    })
+      .then((res) => {
+        console.log(res.data);
+        setTrackingNumber(number.value);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const SS = () => {
     if (view === "Order") {
@@ -78,26 +125,108 @@ const OrderDescription = () => {
       );
     } else if (view === "Shipments") {
       return (
-        <div className="text-center flex flex-col items-center justify-center">
+        <div className="flex flex-col">
           <div className="flex flex-col gap-3">
             <div className="text-lg font-medium">Shipping Address</div>
-            <span>{orderInfo?.address}</span>
-            <span>.................</span>
-            <span>.................</span>
-            <span>.................</span>
+            <div className="flex gap-3">
+              <span className="font-bold">Country: </span>
+              <div>{orderInfo?.country}</div>
+            </div>
+            <div className="flex gap-3">
+              <span className="font-bold">City: </span>
+              <div>{orderInfo?.city}</div>
+            </div>
+            <div className="flex gap-3">
+              <span className="font-bold">Street 1: </span>
+              <div>{orderInfo?.street1}</div>
+            </div>
+            <div className="flex gap-3">
+              <span className="font-bold">Street 2: </span>
+              <div>{orderInfo?.street2}</div>
+            </div>
+            <div className="flex gap-3">
+              <span className="font-bold">Pincode: </span>
+              <div>{orderInfo?.pincode}</div>
+            </div>
           </div>
           <div className="flex pt-10 flex-col gap-5">
             <div className="text-lg font-medium">Status</div>
             <div className="flex gap-10">
-              <button className="p-3 border-black border hover:bg-black hover:text-white duration-500 ">
+              <button
+                onClick={() => {
+                  changeStatus("Proccessing");
+                  setOrderStatus("Proccessing");
+                }}
+                className={`${
+                  orderStatus === "Proccessing" ? "bg-black text-white" : ""
+                } p-3 border-black border hover:bg-black hover:text-white duration-500 `}
+              >
                 Proccesing
               </button>
-              <button className="p-3 border-black border hover:bg-black hover:text-white duration-500 ">
+              <button
+                onClick={() => {
+                  changeStatus("Packing");
+                  setOrderStatus("Packing");
+                }}
+                className={`${
+                  orderStatus === "Packing" ? "bg-black text-white" : ""
+                } p-3 border-black border hover:bg-black hover:text-white duration-500 `}
+              >
                 Packing
               </button>
-              <button className="p-3 border-black border hover:bg-black hover:text-white duration-500 ">
+              <button
+                onClick={() => {
+                  changeStatus("Shipped");
+                  setOrderStatus("Shipped");
+                }}
+                className={`${
+                  orderStatus === "Shipped" ? "bg-black text-white" : ""
+                } p-3 border-black border hover:bg-black hover:text-white duration-500 `}
+              >
                 Shipped
               </button>
+            </div>
+            <div
+              className={`${
+                orderStatus === "Shipped" ? "block" : "hidden"
+              } flex pt-10 flex-col gap-5`}
+            >
+              <div className="text-lg font-medium">Tracking number</div>
+              <div
+                className={` flex flex-col gap-5 ${
+                  trackingNumber === "" ? "block" : "hidden"
+                }`}
+              >
+                <input
+                  type="text"
+                  id="newTrackingNumber"
+                  className="h-10 p-2 w-72 border"
+                />
+                <button
+                  onClick={() => newTrackingNumber()}
+                  className="items-center flex-col h-10 p-2 w-72 text-black text-center border border-black hover:bg-black hover:text-white duration-500"
+                >
+                  Add
+                </button>
+              </div>
+              <div
+                className={` flex flex-col gap-5 ${
+                  trackingNumber !== "" ? "" : "hidden"
+                }`}
+              >
+                <input
+                  type="text"
+                  className="h-10 p-2 w-72 border"
+                  value={trackingNumber}
+                  disabled={true}
+                />
+                <button
+                  onClick={() => changeTrackingNumber()}
+                  className="items-center flex-col h-10 p-2 w-72 text-black text-center border border-black hover:bg-black hover:text-white duration-500"
+                >
+                  Change tracking number
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -118,7 +247,8 @@ const OrderDescription = () => {
             </span>
             <>Order Date : {orderInfo?.date.split("T")[0]}</>
             <div>
-              <span>Order Status :</span> <span> {orderInfo?.status}</span>
+              <span>Order Status :</span>{" "}
+              <span className="text-green-500"> {orderInfo?.status}</span>
             </div>
             <div>
               <span>Shipping charge :</span> <span> Rs. 400</span>
@@ -138,7 +268,8 @@ const OrderDescription = () => {
               <span>Email :</span> <span>{customer?.email}</span>
             </div>
             <div>
-              <span>Shipping method :</span> <span>""</span>
+              <span>Shipping method :</span>{" "}
+              <span className="text-red-400">{orderInfo?.shippingMethod}</span>
             </div>
           </div>
         </div>
