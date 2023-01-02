@@ -17,7 +17,7 @@ const AddProduct = () => {
       "getSizeQuantity"
     ) as HTMLInputElement;
     const size = sizeName.value;
-    const q = sizeQuantity.value;
+    const q = parseInt(sizeQuantity.value);
     const sold: Number = 0;
     const ar = { size, q, sold };
     sizes.push(ar);
@@ -26,7 +26,7 @@ const AddProduct = () => {
     sizeQuantity.value = "";
   }
 
-  function removeSize(size: any, q: any) {
+  function removeSize(size: string, q: number) {
     const sizes: any = formik.values.size;
     const toRemove = { size, q };
     sizes.splice(
