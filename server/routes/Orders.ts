@@ -3,6 +3,7 @@ import {
   GetOrders,
   GetCustomOrder,
   GetMuiltipleOrder,
+  UserAllOrders,
 } from "../controller/Orders/GetOrders";
 import {
   changeStatus,
@@ -11,6 +12,10 @@ import {
 import Authentify from "../middlewares/AuthVerify";
 
 import PlaceOrder from "../controller/Orders/PlaceOrder";
+import {
+  getTicketByUserId,
+  raiseTicket,
+} from "../controller/Orders/CustomerSupport";
 
 const OrderRouter = Router();
 
@@ -20,5 +25,8 @@ OrderRouter.post("/getCustomOrder", Authentify, GetCustomOrder);
 OrderRouter.post("/getMuiltipleOrder", Authentify, GetMuiltipleOrder);
 OrderRouter.post("/changeOrderStatus", Authentify, changeStatus);
 OrderRouter.post("/changeTrackingNumber", Authentify, changeTrackingNumber);
+OrderRouter.post("/userAllOrders", Authentify, UserAllOrders);
+OrderRouter.post("/raiseTicket", Authentify, raiseTicket);
+OrderRouter.post("/getTicketByUserId", Authentify, getTicketByUserId);
 
 export default OrderRouter;

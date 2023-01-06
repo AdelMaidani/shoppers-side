@@ -24,4 +24,14 @@ const GetMuiltipleOrder = (req: Request, res: Response) => {
     .catch((err) => res.send(err));
 };
 
-export { GetOrders, GetCustomOrder, GetMuiltipleOrder };
+const UserAllOrders = (req: Request, res: Response) => {
+  const { userId } = req.body;
+
+  Order.find({
+    userId: { $in: userId },
+  })
+    .then((resp) => res.send(resp))
+    .catch((err) => res.send(err));
+};
+
+export { GetOrders, GetCustomOrder, UserAllOrders, GetMuiltipleOrder };

@@ -14,6 +14,16 @@ const UserNav = () => {
       >
         My orders
       </NavLink>
+      <NavLink
+        style={({ isActive }) => ({
+          textDecoration: isActive ? "underline" : "none",
+          textUnderlineOffset: isActive ? "8px" : "none",
+          border: isActive ? "none" : "",
+        })}
+        to={"/Dashboard/customerSupport"}
+      >
+        Customer Support
+      </NavLink>
     </div>
   );
 };

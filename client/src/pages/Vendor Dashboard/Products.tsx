@@ -16,8 +16,6 @@ const Products = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  console.log(products);
-
   return (
     <div className="p-10 flex gap-10 flex-col">
       <DashNav />

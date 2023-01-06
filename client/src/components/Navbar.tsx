@@ -244,14 +244,15 @@ const Navbar = () => {
               leaveTo="transform opacity-0 scale-95"
             >
               <Menu.Items className="w-32 absolute z-10 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div>
+                <Link to="/dashboard/myOrders">
                   <Menu.Item>{({ active }) => <div>Profile</div>}</Menu.Item>
-                </div>
+                </Link>
 
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (
-                      <div
+                      <Link
+                        to="/dashboard/myOrders"
                         className={classNames(
                           active
                             ? "bg-gray-100 text-gray-900"
@@ -259,31 +260,16 @@ const Navbar = () => {
                           "block px-4 py-2 text-xs"
                         )}
                       >
-                        Profile
-                      </div>
+                        My Orders
+                      </Link>
                     )}
                   </Menu.Item>
                 </div>
                 <div className="py-1">
                   <Menu.Item>
                     {({ active }) => (
-                      <div
-                        className={classNames(
-                          active
-                            ? "bg-gray-100 text-gray-900"
-                            : "text-gray-700",
-                          "block px-4 py-2 text-xs"
-                        )}
-                      >
-                        Orders
-                      </div>
-                    )}
-                  </Menu.Item>
-                </div>
-                <div className="py-1">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <div
+                      <Link
+                        to="/dashboard/customerSupport"
                         className={classNames(
                           active
                             ? "bg-gray-100 text-gray-900"
@@ -292,7 +278,7 @@ const Navbar = () => {
                         )}
                       >
                         Customer Support
-                      </div>
+                      </Link>
                     )}
                   </Menu.Item>
                 </div>

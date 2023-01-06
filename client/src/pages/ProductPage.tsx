@@ -6,7 +6,7 @@ import { useCart } from "../contexts/CartContext";
 
 type Iproduct = {
   product: {
-    id: string;
+    _id: string;
     category: string;
     coverPhoto: String;
     date: Date;
@@ -22,6 +22,11 @@ type Iproduct = {
     subCategory: String;
   };
 };
+
+type sizes = {
+  size: string;
+  q: number;
+}[];
 
 const ProductPage = () => {
   const { cart, IncreaseCartQuantity } = useCart();
@@ -47,26 +52,52 @@ const ProductPage = () => {
   }, []);
 
   // Size
-  const sizes = [] as Array<string>;
-  product?.size.forEach((i) => {
-    sizes.push(i.size);
-  });
+  const [sizes, setSizes] = useState<sizes>();
+
+  useEffect(() => {
+    setSizes(product?.size);
+
+    if (cart) {
+      const cartItem = cart.find((item: any) => item.id === ProductId)?.sizes;
+      const allSizes = product?.size;
+
+      if (cartItem) {
+        allSizes?.map((items) => {
+          if (
+            cartItem.find((it) => it.size === items.size && it.q === items.q)
+          ) {
+            setProduct((currentProduct) => {
+              if (currentProduct) {
+                const updatedSizeList = currentProduct.size.filter((item) => {
+                  return item.size !== items.size;
+                });
+                return { ...currentProduct, size: updatedSizeList };
+              }
+            });
+          }
+        });
+      }
+    }
+  }, [product]);
+
+  const e = document.getElementById("selectSize") as HTMLSelectElement;
 
   const SizeQuantity = () => {
-    const e = document.getElementById("selectSize") as HTMLSelectElement;
     const SizeQ = product?.size.find((item) => item.size === e.value)?.q as any;
-    const Cart = cart
-      .find((item) => item.id === ProductId)
-      ?.sizes.find((size) => size.size === e.value);
+    if (e) {
+      const Cart = cart
+        .find((item) => item.id === ProductId)
+        ?.sizes.find((size) => size.size === e.value);
 
-    if (Cart?.q) {
-      if (Cart.q > 0) {
-        return SizeQ - Cart.q;
-      } else if (Cart.q === 0) {
-        return 0;
+      if (Cart?.q) {
+        if (Cart.q > 0) {
+          return SizeQ - Cart.q;
+        } else if (Cart.q === 0) {
+          return 0;
+        }
+      } else {
+        return SizeQ;
       }
-    } else {
-      return SizeQ;
     }
   };
 
@@ -102,7 +133,7 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="bg-black text-white text-sm p-10 gap-10 flex flex-col md:flex-row ">
+    <div className="bg-black text-white text-sm p-10 min-h-screen max-h-full gap-10 flex flex-col md:flex-row ">
       <div className=" w-3/4 flex md:flex-col gap-5 bg-black ">
         {product?.images.map((image) => (
           <img
@@ -131,10 +162,8 @@ const ProductPage = () => {
             }}
           >
             <option selected>Select Size</option>
-            {sizes.map((size) => (
-              <option value={size} key={size}>
-                {size}
-              </option>
+            {sizes?.map((siz: any) => (
+              <option value={siz.size}>{siz.size}</option>
             ))}
           </select>
           <div

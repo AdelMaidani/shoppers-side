@@ -27,6 +27,8 @@ import {
 import VendorLogin from "./pages/VendorLogin";
 import { CartProvider } from "./contexts/CartContext";
 import Checkout from "./pages/Checkout";
+import CustomerSupport from "./pages/User Dashboard/CustomerSupport";
+import MyOrderDescription from "./pages/User Dashboard/OrderDescription";
 
 const Home = React.lazy(() => import("./pages/Home"));
 
@@ -63,6 +65,14 @@ function App() {
             {/* Customer Dashboard */}
             <Route element={<ForCustomerOnly />}>
               <Route element={<MyOrders />} path="/dashboard/myOrders" />
+              <Route
+                element={<CustomerSupport />}
+                path="/dashboard/customerSupport"
+              />
+              <Route
+                element={<MyOrderDescription />}
+                path="/dashboard/myOrder/:id"
+              />
             </Route>
             {/* Vendor */}
             <Route element={<ForVendorOnly />}>

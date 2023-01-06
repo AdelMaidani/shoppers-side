@@ -53,7 +53,7 @@ function VendorOrderCard({ id, items }: Props) {
             className="h-32 object-contain"
             alt=""
           />
-          <span className="w-32">Paid</span>
+          <span className="w-32">{productInfo?.productName}</span>
           <span className="w-32">{productInfo?.price}</span>
           <span className="w-32">{item.q}</span>
           <span className="w-32">{item.size}</span>
@@ -69,7 +69,7 @@ function VendorOrderCard({ id, items }: Props) {
           <div className="flex flex-col gap-2">
             <span className=" font-bold">Id:</span>
             <span className=" font-bold">Product:</span>
-            <span className=" font-bold">Item: Status</span>
+            <span className=" font-bold">Name</span>
             <span className=" font-bold">Price:</span>
             <span className=" font-bold">Size:</span>
             <span className=" font-bold">Quantity:</span>
@@ -78,7 +78,7 @@ function VendorOrderCard({ id, items }: Props) {
           <div className="flex flex-col gap-2">
             <span>{productInfo?._id.split("", 6)}</span>
             <span>{productInfo?.productName}</span>
-            <span>Paid</span>
+            <span>{productInfo?.productName}</span>
             <span>{productInfo?.price}</span>
             <span className="font-extrabold">{item.size}</span>
             <span className="font-extrabold text-green-500">{item.q}</span>
