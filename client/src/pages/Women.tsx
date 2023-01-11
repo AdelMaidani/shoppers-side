@@ -1,11 +1,32 @@
-import React from "react";
-// import ProductCard from "../components/ProductCard";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import ProductCard from "../components/ProductCard";
+import { iProducts } from "../interfaces/ProductInterface";
 import { scrollToTop } from "../utils/ScrolToTop";
 
 const Women = () => {
-  React.useEffect(() => scrollToTop(), []);
+  const [products, setProducts] = useState<iProducts["products"]>([]);
+  const [womens, setWomens] = useState<iProducts["products"]>([]);
+
+  useEffect(() => {
+    scrollToTop();
+
+    axios({
+      method: "Get",
+      url: "http://localhost:5000/api/vendor/getProduct",
+    })
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    setWomens(products.filter((item) => item.category === "Women"));
+  }, [products]);
+
   return (
-    <div className="flex flex-col items-center p-10 w-full gap-10 bg-black text-white">
+    <div className="flex flex-col items-center p-10 min-h-screen max-h-full w-full gap-10 bg-black text-white">
       <div className="text-lg underline underline-offset-8">Women</div>
       <div className="flex w-full flex-col gap-2 sm:flex-row justify-between">
         <div className="flex gap-1">
@@ -26,14 +47,15 @@ const Women = () => {
         </div>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-10">
-        {/* <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard /> */}
+        {womens.map((women) => (
+          <ProductCard
+            _id={women._id}
+            date={women.date}
+            coverPhoto={women.coverPhoto}
+            productName={women.productName}
+            price={women.price}
+          />
+        ))}
       </div>
     </div>
   );

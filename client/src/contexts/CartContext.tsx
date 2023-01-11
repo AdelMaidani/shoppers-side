@@ -74,7 +74,52 @@ export function CartProvider({ children }: cartProviderProps) {
     }
   };
 
-  const DecreaseCartQuantity = (id: string, size: string) => {};
+  const DecreaseCartQuantity = (id: string, size: string) => {
+    const product = cart.find((item) => item.id === id);
+    const sizes = product?.sizes.find((item) => item.size === size);
+    // console.log(sizes);
+    // console.log(product);
+
+    setCart((cartItems) => {
+      return cartItems.filter((item) => {
+        console.log(item);
+        if (item.id === id) {
+          console.log("yes");
+          if (item.sizes.length === 1) {
+            console.log("Last size");
+            const selectedSize = item.sizes.find((si) => si.size === size);
+            if (selectedSize?.q === 1) {
+              console.log("last q");
+              return item.id !== id;
+            } else {
+              console.log("more q left");
+              return item.sizes.filter((si) => {
+                if (si.size === size) {
+                  console.log("decrease q");
+                  return (si.q = si.q - 1);
+                } else {
+                  console.log("ss");
+                }
+              });
+            }
+          } else {
+            console.log("more size available");
+            return item.sizes.filter((si) => {
+              if (si.size === size) {
+                return (si.q = si.q - 1);
+              } else {
+                console.log("ss");
+              }
+            });
+          }
+        } else {
+          return item;
+        }
+      });
+    });
+  };
+
+  console.log(cart);
 
   return (
     <CartContext.Provider

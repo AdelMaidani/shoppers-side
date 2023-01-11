@@ -50,7 +50,7 @@ function Checkout() {
     if (userType !== "Null") {
       setSwitchLogin("Login");
     }
-  }, []);
+  }, [cart]);
 
   useEffect(() => {
     const total: number[] = [];
