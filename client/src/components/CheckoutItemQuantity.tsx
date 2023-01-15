@@ -17,6 +17,8 @@ function CheckoutItemQuantity({ size, _id, q, sizes }: Props) {
   useEffect(() => {
     if (totalQ === q) {
       setNoMoreLeft(true);
+    } else {
+      setNoMoreLeft(false);
     }
   }, [q]);
 

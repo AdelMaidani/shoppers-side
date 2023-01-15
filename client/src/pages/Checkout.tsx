@@ -45,6 +45,8 @@ function Checkout() {
             console.log(err);
           });
       });
+    } else {
+      setCartItems([]);
     }
 
     if (userType !== "Null") {
@@ -129,6 +131,8 @@ function Checkout() {
   const SwitchLogin = (status: string) => {
     setSwitchLogin(status);
   };
+
+  console.log(cartItems);
 
   return (
     <div className="bg-black min-h-screen max-h-full flex flex-col lg:flex-row gap-10 text-white p-10">

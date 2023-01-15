@@ -76,49 +76,42 @@ export function CartProvider({ children }: cartProviderProps) {
 
   const DecreaseCartQuantity = (id: string, size: string) => {
     const product = cart.find((item) => item.id === id);
-    const sizes = product?.sizes.find((item) => item.size === size);
-    // console.log(sizes);
-    // console.log(product);
+    const mySize = product?.sizes.find((item) => item.size === size);
 
-    setCart((cartItems) => {
-      return cartItems.filter((item) => {
-        console.log(item);
+    setCart((CartItems) => {
+      return CartItems.filter((item) => {
         if (item.id === id) {
-          console.log("yes");
           if (item.sizes.length === 1) {
-            console.log("Last size");
-            const selectedSize = item.sizes.find((si) => si.size === size);
-            if (selectedSize?.q === 1) {
-              console.log("last q");
+            const singleQ = item.sizes.find((si) => si.size === size);
+            if (singleQ?.q == 1) {
               return item.id !== id;
             } else {
-              console.log("more q left");
-              return item.sizes.filter((si) => {
-                if (si.size === size) {
-                  console.log("decrease q");
-                  return (si.q = si.q - 1);
-                } else {
-                  console.log("ss");
-                }
+              item.sizes.map((si) => {
+                return (si.q = si.q - 1);
               });
             }
           } else {
-            console.log("more size available");
-            return item.sizes.filter((si) => {
-              if (si.size === size) {
-                return (si.q = si.q - 1);
-              } else {
-                console.log("ss");
-              }
-            });
+            console.log("more than one size");
+            const siz = item.sizes.find((si) => si.size === size);
+            console.log(siz);
+            if (siz?.q == 1) {
+              const filtered = item.sizes.filter((si) => si.size !== siz.size);
+              return (item.sizes = filtered);
+            } else {
+              return item.sizes.filter((si) => {
+                if (si.size === size) {
+                  return (si.q = si.q - 1);
+                }
+              });
+            }
           }
         } else {
-          return item;
+          console.log("not");
         }
+        return item;
       });
     });
   };
-
   console.log(cart);
 
   return (
