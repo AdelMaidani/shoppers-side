@@ -26,20 +26,20 @@ const Accesories = () => {
   }, [products]);
 
   return (
-    <div className="flex flex-col items-center p-10 min-h-screen max-h-full w-full gap-10 bg-black text-white">
-      <div className="text-lg underline underline-offset-8">Accesories</div>
+    <div className="flex flex-col items-center p-10 min-h-screen max-h-full w-full gap-10 bg-white text-black">
+      <div className="text-xl underline underline-offset-8">Accesories</div>
       <div className="flex w-full flex-col gap-2 sm:flex-row justify-between">
         <div className="flex gap-1">
           <span>Sort by category:</span>
-          <select name="" id="" className="bg-black w-32">
-            <option value="">select</option>
+          <select name="" id="" className="bg-white focus:outline-none w-32">
+            <option value="">Select</option>
             <option value="">Hoodies</option>
             <option value="">Hoodies</option>
           </select>
         </div>
         <div className="flex gap-1">
           <span>Sort by price: </span>
-          <select name="" id="" className="bg-black w-32">
+          <select name="" id="" className="bg-white focus:outline-none w-32">
             <option value="">Select</option>
             <option value="">Price low to high</option>
             <option value="">Price high to low</option>

@@ -95,7 +95,7 @@ function CustomerSupport() {
   });
 
   return (
-    <div className="p-10 bg-black flex flex-col items-left gap-10 h-screen text-white">
+    <div className="p-10 bg-white flex flex-col items-left gap-10 h-screen text-black">
       <UserNav />
 
       {/* Raise a ticket */}
@@ -123,7 +123,7 @@ function CustomerSupport() {
             name="orderId"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="h-10 p-2 w-72 text-black border"
+            className="h-10 p-2 w-72 text-black border bg-white"
           >
             <option>Select order</option>
             {orders?.map((order) => (
@@ -160,7 +160,7 @@ function CustomerSupport() {
             type="submit"
             id="submit"
             name="submit"
-            className="items-center flex-col h-10 p-2 w-72 text-white text-center border border-white hover:bg-white hover:text-black duration-500"
+            className="items-center flex-col h-10 p-2 w-72 text-black text-center border border-black hover:bg-black hover:text-white duration-500"
           >
             Submit
           </button>
@@ -173,14 +173,14 @@ function CustomerSupport() {
           Raised Tickets
         </div>
         <div>
-          <div className="border border-white bg-white  text-black flex items-center justify-around gap-10 p-10 h-20">
+          <div className="border border-white bg-black text-white flex items-center justify-around gap-10 p-10 h-20">
             <span className="w-10">Id</span>
             <span className="w-20">Complaint</span>
             <span className="w-32">Description</span>
             <span className="w-32">Status</span>
           </div>
           {tickets?.map((tick) => (
-            <div className="border border-gray-300 duration-500 hover:bg-gray-300 hover:text-black text-white flex items-center justify-around gap-10 p-10 h-20">
+            <div className="border border-gray-300 duration-500 bg-gray-300 text-black flex items-center justify-around gap-10 p-10 h-20">
               <span className="w-10">{tick.orderId.split("", 6)}</span>
               <span className="w-20">{tick.complaintTitle}</span>
               <span className="w-32">{tick.description}</span>

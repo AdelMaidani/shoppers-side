@@ -46,7 +46,7 @@ function VendorOrderCard({ id, items }: Props) {
   return (
     <div className="flex flex-col gap-10 sm:gap-0 max-w-82">
       {sizes.map((item: any) => (
-        <div className="hidden sm:flex items-center justify-around gap-10 p-10 h-32 hover:bg-gray-200">
+        <div className="hidden sm:flex items-center justify-around gap-10 p-10 h-32 bg-gray-200 text-black">
           <span className="w-32">{productInfo?._id.split("", 6)}</span>
           <img
             src={productInfo?.coverPhoto}

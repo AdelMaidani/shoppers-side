@@ -25,7 +25,7 @@ const ProductCard = (product: Props) => {
           {product.productName}
         </span>
         <div className="flex gap-2">
-          <span className="text-gray-300">Rs.</span>
+          <span className="text-black">Rs.</span>
           <span>{product.price.toString()}</span>
         </div>
       </div>

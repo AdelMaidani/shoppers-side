@@ -133,8 +133,8 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="bg-black text-white text-sm p-10 min-h-screen max-h-full gap-10 flex flex-col md:flex-row ">
-      <div className=" w-3/4 flex md:flex-col gap-5 bg-black ">
+    <div className="bg-white text-black text-sm p-10 min-h-screen max-h-full gap-10 flex flex-col md:flex-row ">
+      <div className="w-3/4 flex md:flex-col gap-5 bg-black ">
         {product?.images.map((image) => (
           <img
             src={image}
@@ -145,14 +145,14 @@ const ProductPage = () => {
         ))}
       </div>
       <div className="flex flex-col w-full sticky top-10 self-start gap-10">
-        <span className="text-xl">{product?.productName}</span>
+        <span className="text-xl font-bold">{product?.productName}</span>
         <div className="flex gap-2">
           <span>Rs.</span>
           <span>{product?.price.toString()}</span>
         </div>
         <div className="flex gap-2 flex-col gap-10">
           <select
-            className="text-white bg-black border border-white p-1"
+            className="text-white hover:text-black hover:bg-white duration-500 border-black bg-black border border-white p-1"
             name="selectSize"
             id="selectSize"
             onChange={() => {
@@ -184,12 +184,12 @@ const ProductPage = () => {
           <div className="">
             <button
               onClick={() => addToBag()}
-              className="bg-black text-white border border-white p-1 w-32 text-center"
+              className="bg-black hover:text-black hover:bg-white border-black duration-500 text-white border border-white p-1 w-32 text-center"
             >
               Add to bag
             </button>
           </div>
-          <button className="bg-black text-white border border-white p-1 w-32 text-center">
+          <button className="bg-black hover:text-black hover:bg-white border-black duration-500 text-white border border-white p-1 w-32 text-center">
             Check Out
           </button>
         </div>

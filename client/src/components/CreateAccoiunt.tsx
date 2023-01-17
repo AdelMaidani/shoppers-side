@@ -64,12 +64,12 @@ function CreateAccoiunt({ switchLogin }: Props) {
   });
 
   return (
-    <div className="bg-black text-white flex h-full flex-col items-center gap-10 p-10">
+    <div className="bg-white text-black flex h-full flex-col items-center gap-10 p-10">
       <div className="text-xl underline underline-offset-8">Register</div>
       <div className="text-xs">Fill in the fields below:</div>
       <form
         onSubmit={formik.handleSubmit}
-        className="flex flex-col text-black items-center gap-5"
+        className="flex flex-col text-white items-center gap-5"
       >
         <div className="flex flex-col gap-2">
           <input
@@ -155,7 +155,7 @@ function CreateAccoiunt({ switchLogin }: Props) {
           onBlur={formik.handleBlur}
           type="submit"
           name="submit"
-          className={` " items-center flex-col h-10 p-2 w-72 text-white text-center border border-white hover:bg-white hover:text-black duration-500" ${
+          className={` " items-center flex-col h-10 p-2 w-72 text-black text-center border border-black hover:bg-black hover:text-white duration-500 " ${
             registering ? "hidden" : ""
           }`}
         >

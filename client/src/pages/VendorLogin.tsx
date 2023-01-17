@@ -56,7 +56,7 @@ const VendorLogin = () => {
   });
 
   return (
-    <div className="bg-black text-white flex h-screen justify-center flex-col items-center gap-10 p-10">
+    <div className="bg-white text-black flex h-screen justify-center flex-col items-center gap-10 p-10">
       <div className="text-xl underline underline-offset-8">Vendor Login</div>
       <div className="text-xs">Please enter e-mail and password:</div>
       <form
@@ -101,7 +101,7 @@ const VendorLogin = () => {
           <div
             className="inline-block w-4 h-4
           border-t-4 
-          border-white  
+          border-black  
           rounded-full 
           animate-spin"
           ></div>
@@ -114,7 +114,7 @@ const VendorLogin = () => {
           onBlur={formik.handleBlur}
           type="submit"
           name="submit"
-          className={` " items-center flex-col h-10 p-2 w-72 text-white text-center border border-white hover:bg-white hover:text-black duration-500" ${
+          className={`items-center flex-col h-10 p-2 w-72 text-black text-center border border-black hover:bg-black hover:text-white duration-500 ${
             logging ? "hidden" : ""
           }`}
         >

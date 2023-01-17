@@ -56,7 +56,7 @@ function Login({ switchLogin }: Props) {
     },
   });
   return (
-    <div className="bg-black text-white flex justify-center flex-col items-center gap-10 p-10">
+    <div className="bg-white text-black flex justify-center flex-col items-center gap-10 p-10">
       <div className="text-xl underline underline-offset-8">Login</div>
       <div className="text-xs">Please login to continue:</div>
       <form
@@ -114,7 +114,7 @@ function Login({ switchLogin }: Props) {
           onBlur={formik.handleBlur}
           type="submit"
           name="submit"
-          className={` " items-center flex-col h-10 p-2 w-72 text-white text-center border border-white hover:bg-white hover:text-black duration-500" ${
+          className={` " items-center flex-col h-10 p-2 w-72 text-black text-center border border-black hover:bg-black hover:text-white duration-500 " ${
             logging ? "hidden" : ""
           }`}
         >

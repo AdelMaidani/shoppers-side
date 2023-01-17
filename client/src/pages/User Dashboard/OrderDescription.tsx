@@ -45,7 +45,7 @@ function MyOrderDescription() {
   }, []);
 
   return (
-    <div className="p-10 bg-black flex flex-col gap-10 h-screen text-white">
+    <div className="p-10 bg-white flex flex-col gap-10 text-black">
       <UserNav />
       <div>
         <div className="flex items-center gap-4">
@@ -94,8 +94,8 @@ function MyOrderDescription() {
         </div>
       </div>
       <div>
-        <div className="flex bg-white text-black flex-col gap-10 sm:gap-0 max-w-82 ">
-          <div className="bg-black hidden sm:flex items-center justify-around gap-10 p-10 text-white h-20">
+        <div className="flex bg-black text-white flex-col gap-10 sm:gap-0 max-w-82 ">
+          <div className="bg-black text-white hidden sm:flex items-center justify-around gap-10 p-10 text-black h-20">
             <span className="w-32">Id</span>
             <span className="w-32">Product</span>
             <span className="w-32">Name</span>
@@ -108,7 +108,7 @@ function MyOrderDescription() {
             <VendorOrderCard id={item.id} items={order.product} />
           ))}
         </div>
-        <div className="bg-black hidden text-white sm:flex items-center justify-around gap-10 p-5">
+        <div className="bg-white hidden text-black sm:flex items-center justify-around gap-10 p-5">
           <span className="w-32"></span>
           <span className="w-32"></span>
           <span className="w-32"></span>

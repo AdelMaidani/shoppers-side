@@ -48,10 +48,10 @@ const MyOrders = () => {
   }, [customerData?._id]);
 
   return (
-    <div className="p-10 bg-black flex flex-col gap-10 h-screen text-white">
+    <div className="p-10 bg-white flex flex-col gap-10 text-black">
       <UserNav />
       <div>
-        <div className="bg-white font-extrabold text-black text-lg flex items-center justify-around gap-10 p-10 h-20">
+        <div className="bg-white font-extrabold text-black text-lg flex items-center justify-around gap-10 p-10 h-20 border border-black">
           <span className="w-20">Date</span>
           <span className="w-10">ID</span>
           <span className="w-32">Total value</span>
@@ -62,7 +62,7 @@ const MyOrders = () => {
       {orders?.map((order) => (
         <Link
           to={`/dashboard/myOrder/${order._id}`}
-          className="border border-gray-300 duration-500 hover:bg-gray-300 hover:text-black text-white flex items-center justify-around gap-10 p-10 h-20"
+          className="border border-gray-300 duration-500 hover:bg-gray-300 text-black flex items-center justify-around gap-10 p-10 h-20"
         >
           <span className="w-20">{order.date.split("T")[0]}</span>
           <span className="w-10">{order._id.split("", 6)}</span>

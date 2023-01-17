@@ -132,10 +132,8 @@ function Checkout() {
     setSwitchLogin(status);
   };
 
-  console.log(cartItems);
-
   return (
-    <div className="bg-black min-h-screen max-h-full flex flex-col lg:flex-row gap-10 text-white p-10">
+    <div className="bg-white  flex flex-col lg:flex-row gap-10 text-black p-10">
       <div className="lg:w-3/5 flex flex-col gap-10">
         <span className="text-xl font-bold">Cart</span>
         <div className="flex flex-col justify-between gap-5">
@@ -182,14 +180,14 @@ function Checkout() {
           <span className="text-xl font-bold">Shipping</span>
           <div className="flex w-full gap-10 items-center justify-center">
             <div className="w-12 border-gray-400 border-b"></div>
-            <div className="text-xs w-1/2 text-center text-gray-200">
+            <div className="text-xs w-1/2 text-center text-gray-500">
               Fill in your shipping address and options
             </div>
             <div className="w-12 border-gray-400 border-b"></div>
           </div>
           <div className="flex flex-col w-full gap-10">
             <div className="flex flex-col gap-4">
-              <div className="text-lg text-gray-300 font-semibold">Country</div>
+              <div className="text-lg text-black font-semibold">Country</div>
               <input
                 placeholder="Country"
                 onChange={formik.handleChange}
@@ -207,7 +205,7 @@ function Checkout() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="text-lg text-gray-300 font-semibold">City</div>
+              <div className="text-lg text-black font-semibold">City</div>
               <input
                 placeholder="city"
                 onChange={formik.handleChange}
@@ -223,9 +221,7 @@ function Checkout() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="text-lg text-gray-300 font-semibold">
-                Street 1
-              </div>
+              <div className="text-lg text-black font-semibold">Street 1</div>
               <div className="flex">
                 <input
                   placeholder="street1"
@@ -245,9 +241,7 @@ function Checkout() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="text-lg text-gray-300 font-semibold">
-                Street 2
-              </div>
+              <div className="text-lg text-black font-semibold">Street 2</div>
               <input
                 placeholder="street2"
                 onChange={formik.handleChange}
@@ -266,9 +260,7 @@ function Checkout() {
             </div>
             <div className="flex gap-10">
               <div className="flex flex-col gap-4">
-                <div className="text-lg text-gray-300 font-semibold">
-                  Pincode
-                </div>
+                <div className="text-lg text-black font-semibold">Pincode</div>
                 <div className="flex">
                   <input
                     placeholder="pincode"
@@ -288,7 +280,7 @@ function Checkout() {
                 </div>
               </div>
               <div className="flex flex-col gap-4">
-                <div className="text-lg text-gray-300 font-semibold">
+                <div className="text-lg text-black font-semibold">
                   Shipping Method
                 </div>
                 <div className="flex gap-10 justify-between">
@@ -333,21 +325,21 @@ function Checkout() {
         <div className="flex flex-col items-center justify-center w-full gap-10">
           <span className="text-center text-xl w-full font-bold">Payment</span>
           <div className="flex justify-center gap-10 w-full items-center">
-            <div className="w-20 bg-gray-200 hover:bg-gray-100 h-10 rounded-lg duration-300 flex items-center">
+            <div className="w-20 bg-gray-200 hover:bg-gray-100 h-10 rounded-lg black flex items-center">
               <img
                 src={gpayLogo}
                 className="object-contain h-12 w-full"
                 alt=""
               />
             </div>
-            <div className="w-20 bg-gray-200 hover:bg-gray-100 h-10 rounded-lg duration-300 flex items-center">
+            <div className="w-20 bg-gray-200 hover:bg-gray-100 h-10 rounded-lg black flex items-center">
               <img
                 src={mobikwikLogo}
                 className="object-contain h-16 w-full"
                 alt=""
               />
             </div>
-            <div className="w-20 bg-gray-200 hover:bg-gray-100 h-10 rounded-lg duration-300 flex items-center">
+            <div className="w-20 bg-gray-200 hover:bg-gray-100 h-10 rounded-lg black flex items-center">
               <img
                 src={phonePeLogo}
                 className="object-contain h-16 w-full"
@@ -357,14 +349,14 @@ function Checkout() {
           </div>
           <div className="flex w-full gap-10 items-center justify-center">
             <div className="w-12 border-gray-400 border-b"></div>
-            <div className="text-xs text-gray-200">
+            <div className="text-xs text-gray-500">
               or pay using debit/credit card
             </div>
             <div className="w-12 border-gray-400 border-b"></div>
           </div>
           <div className="flex flex-col w-full gap-10">
             <div className="flex flex-col gap-4">
-              <div className="text-lg text-gray-300 font-semibold">
+              <div className="text-lg text-black font-semibold">
                 Card Number
               </div>
               <div className="flex">
@@ -372,7 +364,7 @@ function Checkout() {
                   placeholder="cardNumber"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  name="cardNumber"
+                  name="Card Number"
                   className="h-10 p-2 w-2/3 border text-black"
                   type="number"
                 />
@@ -386,7 +378,7 @@ function Checkout() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="text-lg text-gray-300 font-semibold">
+              <div className="text-lg text-black font-semibold">
                 Name on card
               </div>
               <input
@@ -406,7 +398,7 @@ function Checkout() {
               </div>
             </div>
             <div className="flex flex-col gap-4">
-              <div className="text-lg text-gray-300 font-semibold">
+              <div className="text-lg text-black font-semibold">
                 Country or region
               </div>
               <select
@@ -414,7 +406,7 @@ function Checkout() {
                 id="countryOnCard"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                className="h-10 text-black p-2"
+                className="text-white hover:text-black h-10 hover:bg-white duration-500 border-black bg-black border border-white p-1"
               >
                 <option value="usa">United States</option>
                 <option value="usa">United Kingdom</option>
@@ -446,7 +438,7 @@ function Checkout() {
               onBlur={formik.handleBlur}
               type="submit"
               name="submit"
-              className={` " items-center flex-col h-10 p-2 w-72 text-white text-center border border-white hover:bg-white hover:text-black duration-500" ${
+              className={`items-center w-full flex-col h-10 p-2 w-72 text-black text-center border border-black hover:bg-black hover:text-white duration-500 " ${
                 placing ? "hidden" : ""
               }`}
             >
