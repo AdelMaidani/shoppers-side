@@ -93,7 +93,7 @@ const Navbar = () => {
   });
 
   return (
-    <div className="relative">
+    <div className="sticky top-0 z-10">
       <div className="check bg-black flex justify-between pl-5 pr-5 w-full text-white text-xs items-center">
         <div className="hidden sm:flex items-center w-20 gap-10">
           <img className="h-5" src={IndiaFlag} alt="" />

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { scrollToTop } from "../utils/ScrolToTop";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
+import { motion } from "framer-motion";
 
 type Iproduct = {
   product: {
@@ -34,12 +35,17 @@ const ProductPage = () => {
   const [sizeSelected, setSizeSelected] = useState<boolean>(true);
   const [emptySize, setEmptySize] = useState(false);
   const [changeInSize, setChangeInSize] = useState<boolean>();
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
   const id = useParams();
   const ProductId = id.productId as string;
+  const carousel = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
     scrollToTop();
+
+    setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
 
     axios({
       method: "Post",
@@ -49,7 +55,7 @@ const ProductPage = () => {
     })
       .then((res) => setProduct(res.data[0]))
       .catch((err) => console.log(err));
-  }, []);
+  }, [carousel?.current?.scrollWidth]);
 
   // Size
   const [sizes, setSizes] = useState<sizes>();
@@ -133,8 +139,15 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="bg-white text-black text-sm p-10 min-h-screen max-h-full gap-10 flex flex-col md:flex-row ">
-      <div className="w-3/4 flex md:flex-col gap-5 bg-black ">
+    <div
+      ref={carousel}
+      className="bg-white text-black text-md overflow-hidden p-10 min-h-screen max-h-full gap-10 flex flex-col md:flex-row"
+    >
+      <motion.div
+        drag="x"
+        dragConstraints={{ right: 0, left: -width }}
+        className="bg-black w-3/4 h-full flex gap-5 md:hidden"
+      >
         {product?.images.map((image) => (
           <img
             src={image}
@@ -143,8 +156,18 @@ const ProductPage = () => {
             className="w-full h-1/2 object-contain"
           />
         ))}
+      </motion.div>
+      <div className="w-3/4 hidden md:flex md:flex-col gap-5">
+        {product?.images.map((image) => (
+          <img
+            src={image}
+            key={image}
+            alt="Product"
+            className="w-full h-screen object-contain"
+          />
+        ))}
       </div>
-      <div className="flex flex-col w-full sticky top-10 self-start gap-10">
+      <div className="flex flex-col w-full sticky top-32 self-start gap-10">
         <span className="text-xl font-bold">{product?.productName}</span>
         <div className="flex gap-2">
           <span>Rs.</span>
@@ -163,7 +186,9 @@ const ProductPage = () => {
           >
             <option selected>Select Size</option>
             {sizes?.map((siz: any) => (
-              <option value={siz.size}>{siz.size}</option>
+              <option key={siz.value} value={siz.size}>
+                {siz.size}
+              </option>
             ))}
           </select>
           <div
@@ -189,7 +214,11 @@ const ProductPage = () => {
               Add to bag
             </button>
           </div>
-          <button className="bg-black hover:text-black hover:bg-white border-black duration-500 text-white border border-white p-1 w-32 text-center">
+          <button
+            className={`bg-black hover:text-black hover:bg-white border-black duration-500 text-white border border-white p-1 w-32 text-center ${
+              cart.length == 1 ? "block" : "hidden"
+            } `}
+          >
             Check Out
           </button>
         </div>
