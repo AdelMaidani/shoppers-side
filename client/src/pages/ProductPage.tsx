@@ -36,7 +36,6 @@ const ProductPage = () => {
   const [emptySize, setEmptySize] = useState(false);
   const [changeInSize, setChangeInSize] = useState<boolean>();
   const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
 
   const id = useParams();
   const ProductId = id.productId as string;
@@ -141,7 +140,7 @@ const ProductPage = () => {
   return (
     <div
       ref={carousel}
-      className="bg-white text-black text-md overflow-hidden p-10 min-h-screen max-h-full gap-10 flex flex-col md:flex-row"
+      className="bg-white overflow-hidden md:overflow-clip text-black text-md p-10 min-h-screen max-h-full gap-10 flex flex-col md:flex-row"
     >
       <motion.div
         drag="x"

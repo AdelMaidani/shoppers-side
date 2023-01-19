@@ -8,7 +8,15 @@ import { Link } from "react-router-dom";
 import { scrollToTop } from "../utils/ScrolToTop";
 import axios from "axios";
 import banner from "../assets/Covers/banner.png";
+import banner3 from "../assets/Covers/banner3.png";
+import banner2 from "../assets/Covers/banner2.png";
 import { iProducts } from "../interfaces/ProductInterface";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 const Home = () => {
   const [products, setProducts] = useState<iProducts["products"]>([]);
@@ -35,11 +43,30 @@ const Home = () => {
   }, [products]);
 
   return (
-    <div className="text-xs sm:text-sm bg-white min-h-screen h-full flex flex-col items-center p-10 text-black gap-10">
+    <div className="overflow-hidden text-xs sm:text-sm bg-white min-h-screen h-full flex flex-col items-center p-10 text-black gap-10">
       {/* Banner */}
-      <div className="flex flex-col items-center w-3/4">
-        <img src={banner} alt="banner" className="w-full object-contain" />
-      </div>
+      <Swiper
+        className="w-full"
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={50}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+      >
+        <SwiperSlide className="flex items-center justify-center">
+          <img src={banner3} alt="" className="object-contain" />
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center">
+          <img src={banner3} alt="" className="object-contain" />
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center">
+          <img src={banner3} alt="" className="object-contain" />
+        </SwiperSlide>
+        <SwiperSlide className="flex items-center justify-center">
+          <img src={banner3} alt="" className="object-contain" />
+        </SwiperSlide>
+      </Swiper>
       {/* SHOP BY CATEGORY */}
       <span className="text-xl underline underline-offset-8">Category</span>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
